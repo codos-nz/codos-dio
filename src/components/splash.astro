@@ -7,11 +7,11 @@ import HeroImage from "~/components/hero-image.astro";
 const widths = [450, 800];
 const sizes = "(min-width: 640px) 42vw, 67vw";
 
-const { webp, avif, png } = generateImage("src/assets/astronaut.png", {
+const { webp, avif, png } = generateImage("src/assets/rupaul.png", {
   widths,
   formats: ["webp", "avif", "png"],
-  outputDir: "public/assets/images/astronaut",
-  urlPath: "/assets/images/astronaut",
+  outputDir: "public/assets/images/rupaul",
+  urlPath: "/assets/images/rupaul",
 });
 
 const avifSrcset = avif.map(({ srcset }) => srcset).join(",");
@@ -28,13 +28,13 @@ const pngSrcset = png.map(({ srcset }) => srcset).join(",");
     <h2
       class="flex flex-col self-end gap-2 sm:gap-4 sm:self-auto sm:justify-self-end"
     >
-      <Icon name="logomark" class="h-24 text-white md:h-32" />
+
       <div
         class="font-extrabold tracking-tighter text-center text-8xl gradient-text"
       >
-        Build fast
-        <br /> websites,
-        <br /> faster.
+        DRAG
+        <br /> IT
+        <br /> OUT
       </div>
     </h2>
     <picture
@@ -48,7 +48,7 @@ const pngSrcset = png.map(({ srcset }) => srcset).join(",");
         src={png[0].url}
         width={png[0].width}
         height={png[0].height}
-        alt="A floating astronaut in a space suit"
+        alt="A floating rupaul in the void"
       />
     </picture>
   </div>
