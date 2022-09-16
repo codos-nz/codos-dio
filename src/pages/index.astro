@@ -1,10 +1,10 @@
 ---
-import Compatibility from "~/components/compatibility.astro";
-import Features from "~/components/features.astro";
+import AboutUs from "~/components/aboutus.astro";
+import Events from "~/components/events.astro";
 import Footer from "~/components/footer.astro";
 import Header from "~/components/header.astro";
 import Intro from "~/components/intro.astro";
-import Showcase from "~/components/showcase.astro";
+import Contact from "~/components/contact.astro";
 import Splash from "~/components/splash.astro";
 import "~/styles/index.css";
 
@@ -21,7 +21,7 @@ const description =
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-    <title>Astro Landing Page</title>
+    <title>DRAG IT OUT</title>
     <meta name="description" content={description} />
 
     <!-- fonts -->
@@ -83,9 +83,9 @@ const description =
     <Splash />
     <div class="px-8 py-32 space-y-24">
       <Intro />
-      <Features />
-      <Compatibility />
-      <Showcase />
+      <Events />
+      <AboutUs />
+      <Contact />
     </div>
     <Footer />
   </body>

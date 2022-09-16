@@ -4,20 +4,20 @@ import { generateImage } from "astro-eleventy-img";
 const widths = [450, 800, 1200];
 const sizes = "100vw";
 
-const { webp, avif, jpeg } = generateImage("src/assets/moon.jpg", {
+const { webp, png, jpeg } = generateImage("src/assets/hero.webp", {
   widths,
-  formats: ["webp", "avif", "jpeg"],
+  formats: ["webp", "png", "jpeg"],
   outputDir: "public/assets/images/hero",
   urlPath: "/assets/images/hero",
 });
 
-const avifSrcset = avif.map(({ srcset }) => srcset).join(",");
+const pngSrcset = png.map(({ srcset }) => srcset).join(",");
 const webpSrcset = webp.map(({ srcset }) => srcset).join(",");
 const jpegSrcset = jpeg.map(({ srcset }) => srcset).join(",");
 ---
 
 <picture>
-  <source type="image/avif" srcset={avifSrcset} {sizes} />
+  <source type="image/png" srcset={pngSrcset} {sizes} />
   <source type="image/webp" srcset={webpSrcset} {sizes} />
   <source type="image/jpeg" srcset={jpegSrcset} {sizes} />
   <img
@@ -25,6 +25,6 @@ const jpegSrcset = jpeg.map(({ srcset }) => srcset).join(",");
     src={jpeg[1].url}
     width={jpeg[1].width}
     height={jpeg[1].height}
-    alt="The ridged surface of the moon"
+    alt="An image of colour-assorted plastic balls"
   />
 </picture>
