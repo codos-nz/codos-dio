@@ -1,13 +1,25 @@
 ---
 import { Icon } from "astro-icon";
+import { Picture } from "@astrojs/image/components";
 import ContentSection from "~/components/content-section.astro";
+import Wordmark from "../assets/wordmark.webp";
+
+const widths = [400, 600];
+const sizes = "50vw";
 ---
 
 <ContentSection title="" id="intro">
-  <div class="flex"></div>
-  <Icon slot="eyebrow" name="wordmark" class="h-32" />
+  <Fragment slot="eyebrow" >
+    <Picture
+    src={Wordmark}
+    class="object-cover w-50"
+    widths={widths}
+    sizes={sizes}
+    formats={["avif", "jpeg", "png", "webp"]}
+    alt="A wordmark of Drag It Out"
+  />
+  </Fragment>
   <Fragment slot="lead">
-    
     CODOS offers a new kind of site builder for the
     <span class="text-primary">modern</span> web.
     <span class="text-primary">Lightning-fast</span>
