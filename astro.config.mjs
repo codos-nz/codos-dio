@@ -1,16 +1,15 @@
 import tailwind from "@astrojs/tailwind";
-import cloudflare from "@astrojs/cloudflare";
+import image from "@astrojs/image";
+import react from "@astrojs/react";
 import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://dio.codos.co.nz",
-  integrations: [tailwind()],
+  integrations: [react(), tailwind(), image()],
   vite: {
     ssr: {
-      external: ["@11ty/eleventy-img", "svgo"],
-    },
-  },
-  output: "server",
-  adapter: cloudflare({ mode: "directory" }),
+      external: ["svgo"]
+    }
+  }
 });

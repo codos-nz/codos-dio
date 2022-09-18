@@ -1,30 +1,16 @@
 ---
-import { generateImage } from "astro-eleventy-img";
+import { Picture } from "@astrojs/image/components";
+import Hero from "../assets/hero.webp";
 
-const widths = [450, 800, 1200];
+const widths = [400, 800, 1200, 1920];
 const sizes = "100vw";
 
-const { webp, png, jpeg } = generateImage("src/assets/hero.webp", {
-  widths,
-  formats: ["webp", "png", "jpeg"],
-  outputDir: "public/assets/images/hero",
-  urlPath: "/assets/images/hero",
-});
-
-const pngSrcset = png.map(({ srcset }) => srcset).join(",");
-const webpSrcset = webp.map(({ srcset }) => srcset).join(",");
-const jpegSrcset = jpeg.map(({ srcset }) => srcset).join(",");
 ---
-
-<picture>
-  <source type="image/png" srcset={pngSrcset} {sizes} />
-  <source type="image/webp" srcset={webpSrcset} {sizes} />
-  <source type="image/jpeg" srcset={jpegSrcset} {sizes} />
-  <img
-    class="object-cover w-full h-full"
-    src={jpeg[1].url}
-    width={jpeg[1].width}
-    height={jpeg[1].height}
-    alt="An image of colour-assorted plastic balls"
-  />
-</picture>
+<Picture
+src={Hero}
+class="object-cover w-full h-full"
+widths={widths}
+sizes={sizes}
+formats={["avif", "jpeg", "png", "webp"]}
+alt="An image of colour-assorted background"
+/>
