@@ -1,6 +1,4 @@
 import * as adapter from '@astrojs/netlify/netlify-functions.js';
-import React, { createElement } from 'react';
-import ReactDOM from 'react-dom/server';
 import { escape } from 'html-escaper';
 import mime from 'mime';
 import sharp$1 from 'sharp';
@@ -20,204 +18,11 @@ import 'path-browserify';
 import { compile } from 'path-to-regexp';
 
 const $$module1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	get warnForMissingAlt () { return warnForMissingAlt; },
-	get Image () { return $$Image; },
-	get Picture () { return $$Picture; }
+  __proto__: null,
+  get warnForMissingAlt () { return warnForMissingAlt; },
+  get Image () { return $$Image; },
+  get Picture () { return $$Picture; }
 }, Symbol.toStringTag, { value: 'Module' }));
-
-/**
- * Astro passes `children` as a string of HTML, so we need
- * a wrapper `div` to render that content as VNodes.
- *
- * As a bonus, we can signal to React that this subtree is
- * entirely static and will never change via `shouldComponentUpdate`.
- */
-const StaticHtml = ({ value, name }) => {
-	if (!value) return null;
-	return createElement('astro-slot', {
-		name,
-		suppressHydrationWarning: true,
-		dangerouslySetInnerHTML: { __html: value },
-	});
-};
-
-/**
- * This tells React to opt-out of re-rendering this subtree,
- * In addition to being a performance optimization,
- * this also allows other frameworks to attach to `children`.
- *
- * See https://preactjs.com/guide/v8/external-dom-mutations
- */
-StaticHtml.shouldComponentUpdate = () => false;
-
-const slotName$1 = (str) => str.trim().replace(/[-_]([a-z])/g, (_, w) => w.toUpperCase());
-const reactTypeof = Symbol.for('react.element');
-
-function errorIsComingFromPreactComponent(err) {
-	return (
-		err.message &&
-		(err.message.startsWith("Cannot read property '__H'") ||
-			err.message.includes("(reading '__H')"))
-	);
-}
-
-async function check$1(Component, props, children) {
-	// Note: there are packages that do some unholy things to create "components".
-	// Checking the $$typeof property catches most of these patterns.
-	if (typeof Component === 'object') {
-		const $$typeof = Component['$$typeof'];
-		return $$typeof && $$typeof.toString().slice('Symbol('.length).startsWith('react');
-	}
-	if (typeof Component !== 'function') return false;
-
-	if (Component.prototype != null && typeof Component.prototype.render === 'function') {
-		return React.Component.isPrototypeOf(Component) || React.PureComponent.isPrototypeOf(Component);
-	}
-
-	let error = null;
-	let isReactComponent = false;
-	function Tester(...args) {
-		try {
-			const vnode = Component(...args);
-			if (vnode && vnode['$$typeof'] === reactTypeof) {
-				isReactComponent = true;
-			}
-		} catch (err) {
-			if (!errorIsComingFromPreactComponent(err)) {
-				error = err;
-			}
-		}
-
-		return React.createElement('div');
-	}
-
-	await renderToStaticMarkup$1(Tester, props, children, {});
-
-	if (error) {
-		throw error;
-	}
-	return isReactComponent;
-}
-
-async function getNodeWritable() {
-	let nodeStreamBuiltinModuleName = 'stream';
-	let { Writable } = await import(/* @vite-ignore */ nodeStreamBuiltinModuleName);
-	return Writable;
-}
-
-async function renderToStaticMarkup$1(Component, props, { default: children, ...slotted }, metadata) {
-	delete props['class'];
-	const slots = {};
-	for (const [key, value] of Object.entries(slotted)) {
-		const name = slotName$1(key);
-		slots[name] = React.createElement(StaticHtml, { value, name });
-	}
-	// Note: create newProps to avoid mutating `props` before they are serialized
-	const newProps = {
-		...props,
-		...slots,
-	};
-	if (children != null) {
-		newProps.children = React.createElement(StaticHtml, { value: children });
-	}
-	const vnode = React.createElement(Component, newProps);
-	let html;
-	if (metadata && metadata.hydrate) {
-		html = ReactDOM.renderToString(vnode);
-		if ('renderToReadableStream' in ReactDOM) {
-			html = await renderToReadableStreamAsync(vnode);
-		} else {
-			html = await renderToPipeableStreamAsync(vnode);
-		}
-	} else {
-		if ('renderToReadableStream' in ReactDOM) {
-			html = await renderToReadableStreamAsync(vnode);
-		} else {
-			html = await renderToStaticNodeStreamAsync(vnode);
-		}
-	}
-	return { html };
-}
-
-async function renderToPipeableStreamAsync(vnode) {
-	const Writable = await getNodeWritable();
-	let html = '';
-	return new Promise((resolve, reject) => {
-		let error = undefined;
-		let stream = ReactDOM.renderToPipeableStream(vnode, {
-			onError(err) {
-				error = err;
-				reject(error);
-			},
-			onAllReady() {
-				stream.pipe(
-					new Writable({
-						write(chunk, _encoding, callback) {
-							html += chunk.toString('utf-8');
-							callback();
-						},
-						destroy() {
-							resolve(html);
-						},
-					})
-				);
-			},
-		});
-	});
-}
-
-async function renderToStaticNodeStreamAsync(vnode) {
-	const Writable = await getNodeWritable();
-	let html = '';
-	return new Promise((resolve) => {
-		let stream = ReactDOM.renderToStaticNodeStream(vnode);
-		stream.pipe(
-			new Writable({
-				write(chunk, _encoding, callback) {
-					html += chunk.toString('utf-8');
-					callback();
-				},
-				destroy() {
-					resolve(html);
-				},
-			})
-		);
-	});
-}
-
-/**
- * Use a while loop instead of "for await" due to cloudflare and Vercel Edge issues
- * See https://github.com/facebook/react/issues/24169
- */
-async function readResult(stream) {
-	const reader = stream.getReader();
-	let result = '';
-	const decoder = new TextDecoder('utf-8');
-	while (true) {
-		const { done, value } = await reader.read();
-		if (done) {
-			if (value) {
-				result += decoder.decode(value);
-			} else {
-				// This closes the decoder
-				decoder.decode(new Uint8Array());
-			}
-
-			return result;
-		}
-		result += decoder.decode(value, { stream: true });
-	}
-}
-
-async function renderToReadableStreamAsync(vnode) {
-	return await readResult(await ReactDOM.renderToReadableStream(vnode));
-}
-
-const _renderer1 = {
-	check: check$1,
-	renderToStaticMarkup: renderToStaticMarkup$1,
-};
 
 const ASTRO_VERSION = "1.2.6";
 function createDeprecatedFetchContentFn() {
@@ -1592,8 +1397,8 @@ const service = new SharpService();
 var sharp_default = service;
 
 const sharp = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	default: sharp_default
+  __proto__: null,
+  default: sharp_default
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const fnv1a52 = (str) => {
@@ -1763,8 +1568,8 @@ const get$1 = async ({ request }) => {
 };
 
 const _page0 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	get: get$1
+  __proto__: null,
+  get: get$1
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$e = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/content-section.astro", { modules: [], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -1791,11 +1596,11 @@ const $$file$e = "/Volumes/Cache/repos/codos-dio/src/components/content-section.
 const $$url$e = undefined;
 
 const $$module1$5 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$e,
-	default: $$ContentSection,
-	file: $$file$e,
-	url: $$url$e
+  __proto__: null,
+  $$metadata: $$metadata$e,
+  default: $$ContentSection,
+  file: $$file$e,
+  url: $$url$e
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const __vite_glob_1_0 = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 190 190\">\n  <path\n    fill=\"currentColor\"\n    d=\"M95 143V79l33-33v65l-33 32Zm-65 0 32 33v-65H46\"\n  />\n  <path\n    fill=\"currentColor\"\n    d=\"M62 111V46l33-32v65l-33 32Zm66 65v-65l32-32v64l-32 33Zm-98-33V79l32 32\"\n  />\n</svg>\n";
@@ -1827,8 +1632,8 @@ const __vite_glob_1_12 = "<?xml version=\"1.0\" standalone=\"no\"?>\n<!DOCTYPE s
 const SPRITESHEET_NAMESPACE = `astroicon`;
 
 const $$module1$4 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	SPRITESHEET_NAMESPACE
+  __proto__: null,
+  SPRITESHEET_NAMESPACE
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const baseURL = "https://api.astroicon.dev/v1/";
@@ -2050,15 +1855,15 @@ ${contents}`
 }
 
 const $$module2$6 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	preprocess,
-	normalizeProps,
-	fallback,
-	default: load
+  __proto__: null,
+  preprocess,
+  normalizeProps,
+  fallback,
+  default: load
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$module4$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null
+  __proto__: null
 }, Symbol.toStringTag, { value: 'Module' }));
 
 createMetadata("/@fs/Volumes/Cache/repos/codos-dio/node_modules/.pnpm/astro-icon@0.7.3/node_modules/astro-icon/lib/Icon.astro", { modules: [{ module: $$module2$6, specifier: "./utils.ts", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -2109,9 +1914,9 @@ async function getUsedSprites(result) {
 }
 
 const $$module3$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	trackSprite,
-	getUsedSprites
+  __proto__: null,
+  trackSprite,
+  getUsedSprites
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$d = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/node_modules/.pnpm/astro-icon@0.7.3/node_modules/astro-icon/lib/Spritesheet.astro", { modules: [{ module: $$module1$4, specifier: "./constants", assert: {} }, { module: $$module2$6, specifier: "./utils.ts", assert: {} }, { module: $$module3$3, specifier: "./context.ts", assert: {} }, { module: $$module4$3, specifier: "./Props.ts", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -2138,11 +1943,11 @@ const $$file$d = "/Volumes/Cache/repos/codos-dio/node_modules/.pnpm/astro-icon@0
 const $$url$d = undefined;
 
 const $$module1$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$d,
-	default: $$Spritesheet,
-	file: $$file$d,
-	url: $$url$d
+  __proto__: null,
+  $$metadata: $$metadata$d,
+  default: $$Spritesheet,
+  file: $$file$d,
+  url: $$url$d
 }, Symbol.toStringTag, { value: 'Module' }));
 
 createMetadata("/@fs/Volumes/Cache/repos/codos-dio/node_modules/.pnpm/astro-icon@0.7.3/node_modules/astro-icon/lib/SpriteProvider.astro", { modules: [{ module: $$module1$3, specifier: "./Spritesheet.astro", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -2191,13 +1996,13 @@ const SpriteSheet = deprecate(
 const Sprite = Object.assign($$Sprite, { Provider: $$SpriteProvider });
 
 const $$module2$5 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	default: $$Icon,
-	Icon: $$Icon,
-	Spritesheet,
-	SpriteSheet,
-	SpriteProvider: $$SpriteProvider,
-	Sprite
+  __proto__: null,
+  default: $$Icon,
+  Icon: $$Icon,
+  Spritesheet,
+  SpriteSheet,
+  SpriteProvider: $$SpriteProvider,
+  Sprite
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$c = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/compatibility-list.astro", { modules: [{ module: $$module2$5, specifier: "astro-icon", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -2230,11 +2035,11 @@ const $$file$c = "/Volumes/Cache/repos/codos-dio/src/components/compatibility-li
 const $$url$c = undefined;
 
 const $$module2$4 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$c,
-	default: $$CompatibilityList,
-	file: $$file$c,
-	url: $$url$c
+  __proto__: null,
+  $$metadata: $$metadata$c,
+  default: $$CompatibilityList,
+  file: $$file$c,
+  url: $$url$c
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$b = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/aboutus.astro", { modules: [{ module: $$module1$5, specifier: "~/components/content-section.astro", assert: {} }, { module: $$module2$4, specifier: "~/components/compatibility-list.astro", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -2316,11 +2121,11 @@ const $$file$b = "/Volumes/Cache/repos/codos-dio/src/components/aboutus.astro";
 const $$url$b = undefined;
 
 const $$module1$2 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$b,
-	default: $$Aboutus,
-	file: $$file$b,
-	url: $$url$b
+  __proto__: null,
+  $$metadata: $$metadata$b,
+  default: $$Aboutus,
+  file: $$file$b,
+  url: $$url$b
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$a = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/events.astro", { modules: [{ module: $$module1$5, specifier: "~/components/content-section.astro", assert: {} }, { module: $$module2$5, specifier: "astro-icon", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -2380,11 +2185,11 @@ const $$file$a = "/Volumes/Cache/repos/codos-dio/src/components/events.astro";
 const $$url$a = undefined;
 
 const $$module2$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$a,
-	default: $$Events,
-	file: $$file$a,
-	url: $$url$a
+  __proto__: null,
+  $$metadata: $$metadata$a,
+  default: $$Events,
+  file: $$file$a,
+  url: $$url$a
 }, Symbol.toStringTag, { value: 'Module' }));
 
 async function loadLocalImage(src) {
@@ -2855,10 +2660,10 @@ function integration(options = {}) {
 }
 
 const $$module1$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	default: integration,
-	getImage,
-	getPicture
+  __proto__: null,
+  default: integration,
+  getImage,
+  getPicture
 }, Symbol.toStringTag, { value: 'Module' }));
 
 createMetadata("/@fs/Volumes/Cache/repos/codos-dio/node_modules/.pnpm/@astrojs+image@0.7.0/node_modules/@astrojs/image/components/Image.astro", { modules: [{ module: $$module1$1, specifier: "../dist/index.js", assert: {} }, { module: $$module1, specifier: "./index.js", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -2939,11 +2744,11 @@ The "alt" attribute holds a text description of the image, which isn't mandatory
 const Hero = {"src":"/assets/hero.9b0767a5.webp","width":1920,"height":1080,"format":"webp"};
 
 const $$module2$2 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	default: Hero
+  __proto__: null,
+  default: Hero
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const $$metadata$9 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/hero-image.astro", { modules: [{ module: $$module1, specifier: "@astrojs/image/components", assert: {} }, { module: $$module2$2, specifier: "../assets/hero.webp", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
+const $$metadata$9 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/hero-image.astro", { modules: [{ module: $$module1, specifier: "@astrojs/image/components", assert: {} }, { module: $$module2$2, specifier: "~/assets/hero.webp", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
 const $$Astro$9 = createAstro("/@fs/Volumes/Cache/repos/codos-dio/src/components/hero-image.astro", "https://dio.codos.co.nz/", "file:///Volumes/Cache/repos/codos-dio/");
 const $$HeroImage = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$9, $$props, $$slots);
@@ -2957,11 +2762,11 @@ const $$file$9 = "/Volumes/Cache/repos/codos-dio/src/components/hero-image.astro
 const $$url$9 = undefined;
 
 const $$module4$2 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$9,
-	default: $$HeroImage,
-	file: $$file$9,
-	url: $$url$9
+  __proto__: null,
+  $$metadata: $$metadata$9,
+  default: $$HeroImage,
+  file: $$file$9,
+  url: $$url$9
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$8 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/footer.astro", { modules: [{ module: $$module2$5, specifier: "astro-icon", assert: {} }, { module: $$module4$2, specifier: "~/components/hero-image.astro", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -3006,11 +2811,11 @@ const $$file$8 = "/Volumes/Cache/repos/codos-dio/src/components/footer.astro";
 const $$url$8 = undefined;
 
 const $$module3$2 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$8,
-	default: $$Footer,
-	file: $$file$8,
-	url: $$url$8
+  __proto__: null,
+  $$metadata: $$metadata$8,
+  default: $$Footer,
+  file: $$file$8,
+  url: $$url$8
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$7 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/theme-switcher.astro", { modules: [{ module: $$module2$5, specifier: "astro-icon", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [{ type: "inline", value: `
@@ -3074,11 +2879,11 @@ const $$file$7 = "/Volumes/Cache/repos/codos-dio/src/components/theme-switcher.a
 const $$url$7 = undefined;
 
 const $$module2$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$7,
-	default: $$ThemeSwitcher,
-	file: $$file$7,
-	url: $$url$7
+  __proto__: null,
+  $$metadata: $$metadata$7,
+  default: $$ThemeSwitcher,
+  file: $$file$7,
+  url: $$url$7
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$6 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/header.astro", { modules: [{ module: $$module2$5, specifier: "astro-icon", assert: {} }, { module: $$module2$1, specifier: "~/components/theme-switcher.astro", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [{ type: "inline", value: `
@@ -3190,21 +2995,21 @@ const $$file$6 = "/Volumes/Cache/repos/codos-dio/src/components/header.astro";
 const $$url$6 = undefined;
 
 const $$module4$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$6,
-	default: $$Header,
-	file: $$file$6,
-	url: $$url$6
+  __proto__: null,
+  $$metadata: $$metadata$6,
+  default: $$Header,
+  file: $$file$6,
+  url: $$url$6
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const Wordmark = {"src":"/assets/wordmark.3659e8e0.webp","width":5700,"height":926,"format":"webp"};
 
 const $$module4 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	default: Wordmark
+  __proto__: null,
+  default: Wordmark
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const $$metadata$5 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/intro.astro", { modules: [{ module: $$module2$5, specifier: "astro-icon", assert: {} }, { module: $$module1, specifier: "@astrojs/image/components", assert: {} }, { module: $$module1$5, specifier: "~/components/content-section.astro", assert: {} }, { module: $$module4, specifier: "../assets/wordmark.webp", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
+const $$metadata$5 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/intro.astro", { modules: [{ module: $$module2$5, specifier: "astro-icon", assert: {} }, { module: $$module1, specifier: "@astrojs/image/components", assert: {} }, { module: $$module1$5, specifier: "~/components/content-section.astro", assert: {} }, { module: $$module4, specifier: "~/assets/wordmark.webp", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
 const $$Astro$5 = createAstro("/@fs/Volumes/Cache/repos/codos-dio/src/components/intro.astro", "https://dio.codos.co.nz/", "file:///Volumes/Cache/repos/codos-dio/");
 const $$Intro = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$5, $$props, $$slots);
@@ -3232,11 +3037,11 @@ const $$file$5 = "/Volumes/Cache/repos/codos-dio/src/components/intro.astro";
 const $$url$5 = undefined;
 
 const $$module5$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$5,
-	default: $$Intro,
-	file: $$file$5,
-	url: $$url$5
+  __proto__: null,
+  $$metadata: $$metadata$5,
+  default: $$Intro,
+  file: $$file$5,
+  url: $$url$5
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$4 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/showcase-card.astro", { modules: [], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -3279,11 +3084,11 @@ const $$file$4 = "/Volumes/Cache/repos/codos-dio/src/components/showcase-card.as
 const $$url$4 = undefined;
 
 const $$module2 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$4,
-	default: $$ShowcaseCard,
-	file: $$file$4,
-	url: $$url$4
+  __proto__: null,
+  $$metadata: $$metadata$4,
+  default: $$ShowcaseCard,
+  file: $$file$4,
+  url: $$url$4
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const sites = [
@@ -3320,8 +3125,8 @@ const sites = [
 ];
 
 const $$module3$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	default: sites
+  __proto__: null,
+  default: sites
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$3 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/contact.astro", { modules: [{ module: $$module1$5, specifier: "~/components/content-section.astro", assert: {} }, { module: $$module2, specifier: "~/components/showcase-card.astro", assert: {} }, { module: $$module3$1, specifier: "~/data/showcase/sites.json", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
@@ -3347,11 +3152,11 @@ const $$file$3 = "/Volumes/Cache/repos/codos-dio/src/components/contact.astro";
 const $$url$3 = undefined;
 
 const $$module6 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$3,
-	default: $$Contact,
-	file: $$file$3,
-	url: $$url$3
+  __proto__: null,
+  $$metadata: $$metadata$3,
+  default: $$Contact,
+  file: $$file$3,
+  url: $$url$3
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const $$metadata$2 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/starfield.astro", { modules: [], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [{ type: "inline", value: `
@@ -3462,21 +3267,21 @@ const $$file$2 = "/Volumes/Cache/repos/codos-dio/src/components/starfield.astro"
 const $$url$2 = undefined;
 
 const $$module3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$2,
-	default: $$Starfield,
-	file: $$file$2,
-	url: $$url$2
+  __proto__: null,
+  $$metadata: $$metadata$2,
+  default: $$Starfield,
+  file: $$file$2,
+  url: $$url$2
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const Performer1 = {"src":"/assets/performer_1.ff216eaa.png","width":1358,"height":2048,"format":"png"};
 
 const $$module5 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	default: Performer1
+  __proto__: null,
+  default: Performer1
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const $$metadata$1 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/splash.astro", { modules: [{ module: $$module1, specifier: "@astrojs/image/components", assert: {} }, { module: $$module2$5, specifier: "astro-icon", assert: {} }, { module: $$module3, specifier: "~/components/starfield.astro", assert: {} }, { module: $$module4$2, specifier: "~/components/hero-image.astro", assert: {} }, { module: $$module5, specifier: "../assets/performer_1.png", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
+const $$metadata$1 = createMetadata("/@fs/Volumes/Cache/repos/codos-dio/src/components/splash.astro", { modules: [{ module: $$module1, specifier: "@astrojs/image/components", assert: {} }, { module: $$module2$5, specifier: "astro-icon", assert: {} }, { module: $$module3, specifier: "~/components/starfield.astro", assert: {} }, { module: $$module4$2, specifier: "~/components/hero-image.astro", assert: {} }, { module: $$module5, specifier: "~/assets/performer_1.png", assert: {} }], hydratedComponents: [], clientOnlyComponents: [], hydrationDirectives: /* @__PURE__ */ new Set([]), hoisted: [] });
 const $$Astro$1 = createAstro("/@fs/Volumes/Cache/repos/codos-dio/src/components/splash.astro", "https://dio.codos.co.nz/", "file:///Volumes/Cache/repos/codos-dio/");
 const $$Splash = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$1, $$props, $$slots);
@@ -3486,20 +3291,20 @@ const $$Splash = createComponent(async ($$result, $$props, $$slots) => {
   const STYLES = [];
   for (const STYLE of STYLES)
     $$result.styles.add(STYLE);
-  return renderTemplate`${maybeRenderHead($$result)}<section class="relative h-full bg-black astro-2CFTUQH3">
-  ${renderComponent($$result, "Starfield", $$Starfield, { "class": "astro-2CFTUQH3" })}
-  <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40 astro-2CFTUQH3">
-    ${renderComponent($$result, "HeroImage", $$HeroImage, { "class": "astro-2CFTUQH3" })}
+  return renderTemplate`${maybeRenderHead($$result)}<section class="relative h-full bg-black astro-ACL3IRZE">
+  ${renderComponent($$result, "Starfield", $$Starfield, { "class": "astro-ACL3IRZE" })}
+  <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40 astro-ACL3IRZE">
+    ${renderComponent($$result, "HeroImage", $$HeroImage, { "class": "astro-ACL3IRZE" })}
   </div>
-  <div class="relative grid h-full sm:grid-cols-2 place-items-center astro-2CFTUQH3">
-    <h1 class="flex flex-col self-end gap-2 sm:gap-4 sm:self-auto sm:justify-self-end astro-2CFTUQH3">
-      <div class="font-extrabold tracking-tighter text-center text-9xl gradient-text astro-2CFTUQH3">
+  <div class="relative grid h-full sm:grid-cols-2 place-items-center astro-ACL3IRZE">
+    <h1 class="flex flex-col self-end gap-2 sm:gap-4 sm:self-auto sm:justify-self-end astro-ACL3IRZE">
+      <div class="font-extrabold tracking-tighter text-center text-9xl gradient-text astro-ACL3IRZE">
         DRAG.
-        <br class="astro-2CFTUQH3"> IT.
-        <br class="astro-2CFTUQH3"> OUT.
+        <br class="astro-ACL3IRZE"> IT.
+        <br class="astro-ACL3IRZE"> OUT.
       </div>
     </h1>
-    ${renderComponent($$result, "Picture", $$Picture, { "src": Performer1, "class": "self-start w-2/3 max-w-3xl sm:w-10/12 sm:self-auto sm:justify-self-start astro-2CFTUQH3", "widths": widths, "sizes": sizes, "formats": ["avif", "jpeg", "png", "webp"], "alt": "A drag performer appearing in the void" })}
+    ${renderComponent($$result, "Picture", $$Picture, { "src": Performer1, "class": "self-start w-2/3 max-w-3xl sm:w-10/12 sm:self-auto sm:justify-self-start astro-ACL3IRZE", "widths": widths, "sizes": sizes, "formats": ["avif", "jpeg", "png", "webp"], "alt": "A drag performer appearing in the void" })}
   </div>
 </section>
 
@@ -3518,11 +3323,11 @@ const $$file$1 = "/Volumes/Cache/repos/codos-dio/src/components/splash.astro";
 const $$url$1 = undefined;
 
 const $$module7 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata: $$metadata$1,
-	default: $$Splash,
-	file: $$file$1,
-	url: $$url$1
+  __proto__: null,
+  $$metadata: $$metadata$1,
+  default: $$Splash,
+  file: $$file$1,
+  url: $$url$1
 }, Symbol.toStringTag, { value: 'Module' }));
 
 var __freeze = Object.freeze;
@@ -3550,15 +3355,15 @@ const $$file = "/Volumes/Cache/repos/codos-dio/src/pages/index.astro";
 const $$url = "";
 
 const _page1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-	__proto__: null,
-	$$metadata,
-	default: $$Index,
-	file: $$file,
-	url: $$url
+  __proto__: null,
+  $$metadata,
+  default: $$Index,
+  file: $$file,
+  url: $$url
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const pageMap = new Map([['node_modules/.pnpm/@astrojs+image@0.7.0/node_modules/@astrojs/image/dist/endpoint.js', _page0],['src/pages/index.astro', _page1],]);
-const renderers = [Object.assign({"name":"astro:jsx","serverEntrypoint":"astro/jsx/server.js","jsxImportSource":"astro"}, { ssr: server_default }),Object.assign({"name":"@astrojs/react","clientEntrypoint":"@astrojs/react/client.js","serverEntrypoint":"@astrojs/react/server.js","jsxImportSource":"react"}, { ssr: _renderer1 }),];
+const renderers = [Object.assign({"name":"astro:jsx","serverEntrypoint":"astro/jsx/server.js","jsxImportSource":"astro"}, { ssr: server_default }),];
 
 if (typeof process !== "undefined") {
   if (process.argv.includes("--verbose")) ; else if (process.argv.includes("--silent")) ; else ;
@@ -3629,7 +3434,7 @@ function deserializeManifest(serializedManifest) {
   };
 }
 
-const _manifest = Object.assign(deserializeManifest({"adapterName":"@astrojs/netlify/functions","routes":[{"file":"","links":[],"scripts":[],"routeData":{"type":"endpoint","route":"/_image","pattern":"^\\/_image$","segments":[[{"content":"_image","dynamic":false,"spread":false}]],"params":[],"component":"node_modules/.pnpm/@astrojs+image@0.7.0/node_modules/@astrojs/image/dist/endpoint.js","pathname":"/_image","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":["assets/index.235765d6.css"],"scripts":[{"type":"external","value":"hoisted.47a8402d.js"}],"routeData":{"route":"/","type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","_meta":{"trailingSlash":"ignore"}}}],"site":"https://dio.codos.co.nz/","base":"/","markdown":{"drafts":false,"syntaxHighlight":"shiki","shikiConfig":{"langs":[],"theme":"github-dark","wrap":false},"remarkPlugins":[],"rehypePlugins":[],"remarkRehype":{},"extendDefaultPlugins":false,"isAstroFlavoredMd":false},"pageMap":null,"renderers":[],"entryModules":{"\u0000@astrojs-ssr-virtual-entry":"entry.mjs","@astrojs/react/client.js":"client.4308eb09.js","/astro/hoisted.js?q=0":"hoisted.47a8402d.js","astro:scripts/before-hydration.js":""},"assets":["/assets/wordmark.3659e8e0.webp","/assets/hero.9b0767a5.webp","/assets/performer_1.ff216eaa.png","/assets/index.235765d6.css","/client.4308eb09.js","/favicon.ico","/favicon.svg","/hoisted.47a8402d.js","/social.jpg"]}), {
+const _manifest = Object.assign(deserializeManifest({"adapterName":"@astrojs/netlify/functions","routes":[{"file":"","links":[],"scripts":[],"routeData":{"type":"endpoint","route":"/_image","pattern":"^\\/_image$","segments":[[{"content":"_image","dynamic":false,"spread":false}]],"params":[],"component":"node_modules/.pnpm/@astrojs+image@0.7.0/node_modules/@astrojs/image/dist/endpoint.js","pathname":"/_image","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":["assets/index.1a9973df.css"],"scripts":[{"type":"external","value":"hoisted.b2d89190.js"}],"routeData":{"route":"/","type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","_meta":{"trailingSlash":"ignore"}}}],"site":"https://dio.codos.co.nz/","base":"/","markdown":{"drafts":false,"syntaxHighlight":"shiki","shikiConfig":{"langs":[],"theme":"github-dark","wrap":false},"remarkPlugins":[],"rehypePlugins":[],"remarkRehype":{},"extendDefaultPlugins":false,"isAstroFlavoredMd":false},"pageMap":null,"renderers":[],"entryModules":{"\u0000@astrojs-ssr-virtual-entry":"entry.mjs","/astro/hoisted.js?q=0":"hoisted.b2d89190.js","astro:scripts/before-hydration.js":""},"assets":["/assets/wordmark.3659e8e0.webp","/assets/hero.9b0767a5.webp","/assets/performer_1.ff216eaa.png","/assets/index.1a9973df.css","/favicon.ico","/favicon.svg","/hoisted.b2d89190.js","/social.jpg"]}), {
 	pageMap: pageMap,
 	renderers: renderers
 });
