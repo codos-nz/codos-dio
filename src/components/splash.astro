@@ -1,9 +1,8 @@
 ---
 import { Picture } from "@astrojs/image/components";
-import Starfield from "~/components/starfield.astro";
 import Bubbles from "./bubbles.astro";
 import HeroImage from "~/components/hero-image.astro";
-import Performer1 from "../assets/performer_1.png";
+import PerformerBoth from "../assets/performer_both.webp";
 
 const widths = [450, 640];
 const sizes = "(min-width: 640px) 42vw, 67vw";
@@ -28,7 +27,7 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
       </div>
     </h1>
     <Picture
-      src={Performer1}
+      src={PerformerBoth}
       class="self-start w-2/3 max-w-3xl sm:w-10/12 sm:self-auto sm:justify-self-start"
       widths={widths}
       sizes={sizes}
