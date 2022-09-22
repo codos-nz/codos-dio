@@ -1,7 +1,7 @@
 ---
 import { Picture } from "@astrojs/image/components";
-import { Icon } from "astro-icon";
 import Starfield from "~/components/starfield.astro";
+import Bubbles from "./bubbles.astro";
 import HeroImage from "~/components/hero-image.astro";
 import Performer1 from "../assets/performer_1.png";
 
@@ -10,8 +10,8 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
 
 ---
 
-<section class="relative h-full bg-black">
-  <Starfield />
+<section class="relative h-full z-auto">
+  <Bubbles />
   <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40">
     <HeroImage />
   </div>
@@ -66,7 +66,7 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
       @apply animate-none;
     }
 
-    :global(#starfield) {
+    :global(#bubblefield) {
       @apply hidden;
     }
 

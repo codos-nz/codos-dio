@@ -8,37 +8,37 @@ const widths = [400, 600];
 const sizes = "50vw";
 ---
 
-<ContentSection title="" id="intro">
-  <Fragment slot="eyebrow" >
+<ContentSection title="" id="intro" class="z-40">
+  <Fragment slot="eyebrow">
     <Picture
     src={Wordmark}
-    class="object-cover w-50"
+    class="object-cover w-50 z-40"
     widths={widths}
     sizes={sizes}
     formats={["avif", "jpeg", "png", "webp"]}
     alt="A wordmark of Drag It Out"
   />
   </Fragment>
-  <Fragment slot="lead">
+  <Fragment slot="lead" class="z-40">
     CODOS offers a new kind of site builder for the
     <span class="text-primary">modern</span> web.
     <span class="text-primary">Lightning-fast</span>
     performance meets <span class="text-primary">amazing</span> end-user experience.
   </Fragment>
-  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 z-40">
     <a
       href="https://codos.co.nz"
       class="flex items-center justify-center gap-3 px-6 py-4 border-2 border-current"
     >
       <Icon pack="mdi" name="telescope" class="h-8" />
-      <span>Read the docs</span>
+      <span>Read the ToS</span>
     </a>
     <a
       href="https://codos.co.nz"
       class="flex items-center justify-center gap-3 px-6 py-4 border-2 border-current"
     >
-      <Icon pack="mdi" name="rocket" class="h-8" />
-      <span>Try it out</span>
+      <Icon pack="mdi" name="dance-pole" class="h-8" />
+      <span>Drag it out</span>
     </a>
   </div>
 </ContentSection>
