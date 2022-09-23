@@ -1,6 +1,6 @@
-<div id="bubblefield" class="absolute inset-0 z-0">
+<div id="bubblefield" class="absolute inset-0 z-0 overflow-x-hidden overflow-y-auto">
   <div class="bubbles flex">
-    <span class="shrink -z-10"></span>
+    <span class="shrink"></span>
     <span class="shrink"></span>
     <span class="shrink"></span>
     <span class="shrink"></span>
@@ -34,6 +34,7 @@
 <style lang="scss">
   .bubbles-container {
     margin: 0;
+    max-width: 100vw;
     overflow: hidden;
   }
 
