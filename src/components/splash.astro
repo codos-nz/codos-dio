@@ -3,7 +3,7 @@ import { Picture } from "@astrojs/image/components";
 import Bubbles from "./bubbles.astro";
 import HeroImage from "~/components/hero-image.astro";
 import PerformerBoth from "../assets/performer_both.webp";
-
+import WordmarkVertical from "../assets/wordmark-vertical.svg";
 const widths = [450, 640];
 const sizes = "(min-width: 640px) 42vw, 67vw";
 ---
@@ -15,14 +15,12 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
   </div>
   <div class="relative grid h-full sm:grid-cols-2 place-items-center">
     <h1
-      class="flex flex-col self-end gap-2 sm:gap-4 sm:self-auto sm:justify-self-end"
+      class="flex flex-col self-end gap-2 sm:gap-4 sm:self-auto sm:justify-self-auto"
     >
       <div
         class="font-extrabold tracking-tighter text-center text-9xl gradient-text"
       >
-        DRAG.
-        <br /> IT.
-        <br /> OUT.
+        <img src={WordmarkVertical} alt="wordmark of Drag It Out" />
       </div>
     </h1>
     <Picture

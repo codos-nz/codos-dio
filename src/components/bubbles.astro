@@ -1,34 +1,9 @@
+---
+import background from "../assets/background.svg";
+---
+
 <div id="bubblefield" class="absolute inset-0 z-0 overflow-hidden">
-  <div class="bubbles flex">
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-    <span class="shrink"></span>
-  </div>
+  <img src={background} alt="bubbly background" />
 </div>
 
 <style lang="scss">
@@ -42,40 +17,5 @@
     width: 100vw;
     height: 100vh;
     background: #3e1e68;
-  }
-
-  $particleSize: 30vmin;
-  $animationDuration: 6s;
-  $amount: 20;
-  .bubbles span {
-    width: $particleSize;
-    height: $particleSize;
-    border-radius: $particleSize;
-    backface-visibility: hidden;
-    position: absolute;
-    animation-name: move;
-    animation-duration: $animationDuration;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    $colors: (#e45a84, #c278ca, #583c87, #e7cbd5, #b7d8b7, #ffacac);
-    @for $i from 1 through $amount {
-      &:nth-child(#{$i}) {
-        color: nth($colors, random(length($colors)));
-        top: random(100) * 1%;
-        left: random(100) * 1%;
-        animation-duration: calc(random($animationDuration * 10) / 10) * 1s + 10s;
-        animation-delay: calc(random(($animationDuration + 10s) * 10) / 10) * -1s;
-        transform-origin: (random(50) - 25) * 1vw (random(50) - 25) * 0.5vh;
-        $blurRadius: (random() + 0.5) * $particleSize * 0.5;
-        $x: if(random() > 0.5, -1, 1);
-        box-shadow: ($particleSize * 2 * $x) 0 $blurRadius currentColor;
-      }
-    }
-  }
-
-  @keyframes move {
-    100% {
-      transform: translate3d(0, 0, 1px) rotate(360deg);
-    }
   }
 </style>
