@@ -1,2 +1,6 @@
 dist/
 .output/
+.vercel/
+.netlify/
+.cloudflare/
+pnpm-lock.yaml

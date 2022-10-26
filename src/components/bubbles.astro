@@ -1,21 +1,35 @@
 ---
-import background from "../assets/background.svg";
+import backgroundDots from "../assets/background-dots.svg";
 ---
 
 <div id="bubblefield" class="absolute inset-0 z-0 overflow-hidden">
-  <img class="bubbles object-cover" src={background} alt="bubbly background" />
+  <img
+    class="bubbles object-cover"
+    src={backgroundDots}
+    alt="bubbly background"
+  />
 </div>
 
 <style lang="scss">
-  .bubbles-container {
+  #bubblefield {
     margin: 0;
     max-width: 100vw;
-    overflow: hidden;
+    background-size: 100% 100%;
+    background-position: 0px 0px, 0px 0px;
+    background-image: 
+      radial-gradient(
+        100% 100% at 93% 99%,
+        #104735ff 0%,
+        #07041100 100%
+      ),
+      radial-gradient(100% 100% at 0% 100%, #46111e 0%, #070411ff 100%),
+      url("../assets/background-color.avif");
   }
 
   .bubbles {
     width: 100vw;
     height: 100vh;
-    background: #3e1e68;
+    mix-blend-mode: color-dodge;
+    opacity: 0.2;
   }
 </style>

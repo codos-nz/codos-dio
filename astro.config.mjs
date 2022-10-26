@@ -6,5 +6,12 @@ import { defineConfig } from "astro/config";
 // https://astro.build/config
 export default defineConfig({
   site: "https://dio.codos.co.nz",
-  integrations: [react(), tailwind(), image()]
+  integrations: [react(), tailwind(), image({
+    serviceEntryPoint: '@astrojs/image/sharp'
+  })],
+  vite: {
+    ssr: {
+      external: ["svgo"],
+    },
+  },
 });
