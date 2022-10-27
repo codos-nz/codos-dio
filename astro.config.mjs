@@ -3,7 +3,9 @@ import image from "@astrojs/image";
 import react from "@astrojs/react";
 import { defineConfig } from "astro/config";
 import vercel from "@astrojs/vercel/serverless";
+import compress from "astro-compress";
 
+// https://astro.build/config
 export default defineConfig({
   output: "server",
   site: "https://dio.codos.co.nz",
@@ -12,6 +14,13 @@ export default defineConfig({
     tailwind(),
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
+    }),
+    compress({
+      css: true,
+      html: true,
+      img: true,
+      js: true,
+      svg: true,
     }),
   ],
   vite: {
