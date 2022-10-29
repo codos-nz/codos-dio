@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "pnpm run clean && pnpm install --frozen-lockfile && pnpm run astro build",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",
@@ -14,8 +14,6 @@
   "devDependencies": {
     "@astrojs/tailwind": "^2.1.1",
     "@types/micromodal": "^0.3.3",
-    "@types/react": "^18.0.23",
-    "@types/react-dom": "^18.0.7",
     "astro": "^1.5.2",
     "astro-icon": "^0.7.3",
     "prettier": "2.7.1",
@@ -25,12 +23,9 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.10.0",
-    "@astrojs/react": "^1.2.1",
     "@astrojs/vercel": "^2.3.2",
     "astro-compress": "^1.0.12",
     "micromodal": "^0.4.10",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "sass": "^1.55.0",
     "sharp": "^0.31.1",
     "svgo": "2.8.0",
