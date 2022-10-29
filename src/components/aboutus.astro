@@ -1,6 +1,9 @@
 ---
+import { Icon } from "astro-icon";
 import ContentSection from "~/components/content-section.astro";
 import CompatibilityList from "~/components/compatibility-list.astro";
+import FancyCard from "~/components/fancy-card.astro";
+import SvgTextWrapper from "~/components/svg-text-icon.astro";
 
 const frameworks = [
   {
@@ -71,18 +74,18 @@ const platforms = [
 
 <ContentSection title="About Us" id="about-us">
   <Fragment slot="lead">
-    At <span class="text-primary">CODOS</span>{" "}we offer{" "}
-    <span class="text-primary">professionally designed websites </span>
-    on time at a great price that suits your budget.
+    <div class="max-w-xl text-2xl font-extrabold text-center">
+      <SvgTextWrapper svgText="Drag It Out"
+        ><Icon name="wordmark" class="svg-inline" />
+      </SvgTextWrapper>{" "}is a Christchurch run drag queen events company{" "}
+      that provides <span class="gradient-text-pride">LGBTQIA+</span>{" "}safe
+      events around the <span class="text-primary">Canterbury</span>{
+        " "
+      }region.<br />
+      We like to provide fun family friendly <span class="text-primary"
+        >entertainment</span
+      >{" "}for all ages with lots of energy and laughter for all.
+    </div>
   </Fragment>
-  <CompatibilityList
-    title="Frameworks"
-    data={frameworks}
-    url="https://codos.co.nz"
-  />
-  <CompatibilityList
-    title="Platforms"
-    data={platforms}
-    url="https://codos.co.nz"
-  />
+  <FancyCard />
 </ContentSection>

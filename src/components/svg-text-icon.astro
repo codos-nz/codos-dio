@@ -1,0 +1,17 @@
+---
+const { svgText } = Astro.props;
+---
+
+<span class="relative">
+  <slot id={svgText} />
+  <span class="absolute text-transparent top-0 left-0 text-left tracking-wider"
+    >{svgText}</span
+  >
+</span>
+
+<style>
+  svg {
+    /* position: absolute; */
+    pointer-events: none;
+  }
+</style>

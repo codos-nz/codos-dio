@@ -17,3 +17,25 @@
   --color-background-offset: theme("colors.gray.800");
   --color-border: theme("colors.gray.50" / 10%);
 }
+
+.gradient-text-pride {
+  @apply text-transparent bg-clip-text;
+  background-image: linear-gradient(
+    to right,
+    theme("colors.red.600"),
+    theme("colors.orange.600"),
+    theme("colors.yellow.300"),
+    theme("colors.green.500"),
+    theme("colors.blue.700"),
+    theme("colors.violet.900")
+  );
+}
+
+.svg-inline {
+  display: inline;
+  height: 1em;
+  font-size: inherit;
+  color: inherit;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
