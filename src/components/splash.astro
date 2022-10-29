@@ -1,5 +1,5 @@
 ---
-import { Picture } from "@astrojs/image/components";
+import { Image, Picture } from "@astrojs/image/components";
 import Bubbles from "./bubbles.astro";
 import HeroImage from "~/components/hero-image.astro";
 import PerformerBoth from "../assets/performer_both.webp";
@@ -14,20 +14,17 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
     <HeroImage />
   </div>
   <div class="relative grid h-full sm:grid-cols-2 place-items-center">
-    <h1
-      class="flex flex-col self-end gap-2 sm:gap-4 sm:self-auto sm:justify-self-auto"
+    <div
+      class="grid self-end gap-2 w-1/2 sm:w-2/5 max-w-l md:gap-4 sm:self-auto sm:justify-self-auto"
     >
-      <div
-        class="flex font-extrabold tracking-tighter text-center text-9xl gradient-text"
-      >
-        <img
-          class="aspect-auto object-scale-down self-center md:max-w-lg sm:self-center sm:justify-self-center"
-          src={WordmarkVertical}
-          alt="wordmark of Drag It Out"
-          style="max-inline-size: 50vw;"
-        />
-      </div>
-    </h1>
+      <Image
+        class="object-cover w-full h-full"
+        src={WordmarkVertical}
+        alt="wordmark of Drag It Out"
+        width="345"
+        aspectRatio={345 / 385}
+      />
+    </div>
     <div
       class="self-start w-2/3 max-w-3xl sm:w-10/12 sm:self-auto sm:justify-self-start"
     >
