@@ -28,16 +28,20 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
         />
       </div>
     </h1>
-    <Picture
-      src={PerformerBoth}
-      class="aspect-auto object-scale-down self-start w-2/3 max-w-3xl sm:self-auto sm:justify-self-start"
-      widths={widths}
-      sizes={sizes}
-      height={"auto"}
-      loading={"eager"}
-      formats={["avif", "png", "webp"]}
-      alt="A drag performer appearing in the void"
-    />
+    <div
+      class="self-start w-2/3 max-w-3xl sm:w-10/12 sm:self-auto sm:justify-self-start"
+    >
+      <Picture
+        src={PerformerBoth}
+        class="animate-float object-cover w-full h-full"
+        widths={widths}
+        sizes={sizes}
+        height={"auto"}
+        loading={"eager"}
+        formats={["avif", "png", "webp"]}
+        alt="A drag performer appearing in the void"
+      />
+    </div>
   </div>
 </section>
 
@@ -60,12 +64,12 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
     }
   }
 
-  picture {
+  img.animate-float {
     animation: float linear 2.5s infinite alternate;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    picture {
+    img.animate-float {
       @apply animate-none;
     }
 
