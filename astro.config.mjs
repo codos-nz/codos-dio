@@ -29,10 +29,5 @@ export default defineConfig({
       js: false,
       svg: false,
     }),
-  ],
-  vite: {
-    ssr: {
-      external: ["svgo"],
-    },
-  },
+  ]
 });
