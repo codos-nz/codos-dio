@@ -1,7 +1,8 @@
 ---
 import ContentSection from "~/components/content-section.astro";
 import ShowcaseCard from "~/components/showcase-card.astro";
-import sites from "~/data/showcase/sites.json";
+import rawEvents from "~/data/showcase/events.json";
+const { events } = JSON.parse(JSON.stringify(rawEvents));
 ---
 
 <ContentSection title="Contact" id="contact">
@@ -13,15 +14,32 @@ import sites from "~/data/showcase/sites.json";
   <div class="max-w-6xl space-y-2">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {
-        sites.map(({ title, image, url }) => (
-          <ShowcaseCard title={title} image={image} url={url} />
-        ))
+        events.map(
+          ({ name, images, url, datetime_summary, location_summary }) => (
+            <ShowcaseCard
+              title={
+                String(name).toUpperCase().startsWith("DRAG IT OUT")
+                  ? String(name)
+                      .split(/([Pp][Rr][Ee][Ss][Ee][Nn][Tt][Ss]\s)+/g)
+                      .at(-1)
+                  : "Drag It Out"
+              }
+              image={images.images[0].original_url}
+              url={url}
+              date={datetime_summary}
+              location={location_summary}
+            />
+          )
+        )
       }
     </div>
     <p class="text-sm text-right">
-      <a class="text-primary" href="https://codos.co.nz">
-        ...and more &rarr;
-      </a>
+      <a
+        class="text-primary"
+        href="https://www.eventfinda.co.nz/user/dragitoutchch/favourites/events"
+      >
+        ...and more &rarr;</a
+      >
     </p>
   </div>
 </ContentSection>
