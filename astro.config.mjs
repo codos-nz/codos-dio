@@ -1,12 +1,10 @@
 import tailwind from "@astrojs/tailwind";
 import image from "@astrojs/image";
 import { defineConfig } from "astro/config";
-import vercel from "@astrojs/vercel/serverless";
 import compress from "astro-compress";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
   site: "https://dio.codos.co.nz",
   integrations: [
     tailwind(),
@@ -14,17 +12,12 @@ export default defineConfig({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
     compress({
-      css: true,
-      html: true,
+      css: false,
+      html: false,
       img: true,
-      js: true,
-      svg: true,
+      js: false,
+      svg: false,
     }),
   ],
-  vite: {
-    ssr: {
-      external: ["svgo"],
-    },
-  },
-  adapter: vercel(),
+  cleanUrls: true,
 });

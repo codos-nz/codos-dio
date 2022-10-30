@@ -1,5 +1,6 @@
 ---
 import { Image, Picture } from "@astrojs/image/components";
+import { Icon } from "astro-icon";
 import Bubbles from "./bubbles.astro";
 import HeroImage from "~/components/hero-image.astro";
 import PerformerBoth from "../assets/performer_both.webp";
@@ -17,13 +18,7 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
     <div
       class="grid self-end gap-2 w-1/2 sm:w-2/5 max-w-l md:gap-4 sm:self-auto sm:justify-self-auto"
     >
-      <Image
-        class="object-cover w-full h-full"
-        src={WordmarkVertical}
-        alt="wordmark of Drag It Out"
-        width="345"
-        aspectRatio={345 / 385}
-      />
+      <Icon name="icon-wordmark-vertical" class="object-cover w-full h-full" />
     </div>
     <div
       class="self-start w-2/3 max-w-3xl sm:w-10/12 sm:self-auto sm:justify-self-start"
@@ -36,7 +31,7 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
         height={"auto"}
         loading={"eager"}
         formats={["avif", "png", "webp"]}
-        alt="A drag performer appearing in the void"
+        alt="Two drag performers appearing in the void"
       />
     </div>
   </div>
