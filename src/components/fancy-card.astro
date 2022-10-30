@@ -1,5 +1,10 @@
 ---
+import { Picture } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
+import LadyBubbles from "../assets/lady_bubbles.webp";
+
+const widths = [450, 800];
+const sizes = "(min-width: 640px) 42vw, 67vw";
 ---
 
 <div class="container my-24 px-6 mx-auto">
@@ -34,37 +39,46 @@ import { Icon } from "astro-icon";
               If you can't see her you will definitely hear her.
             </p>
             <p class="text-slate-700 mb-12">
-              She is known for riding her <Icon name="lime" class="svg-inline" /> lime scooter around the streets of
-              Christchurch.
+              She is known for riding her <Icon
+                name="lime"
+                class="svg-inline"
+              /> lime scooter around the streets of Christchurch.
             </p>
 
             <div class="grid md:grid-cols-3 gap-x-6">
               <div class="mb-12 md:mb-0">
                 <h2 class="text-3xl font-bold text-dark mb-4">100%</h2>
-                <h5 class="text-lg font-medium text-slate-700 mb-0">
-                  Fun<Icon name="noto:party-popper" class="svg-inline" /> 
-                </h5>
+                <h3 class="text-lg font-medium text-slate-700 mb-0">
+                  Fun<Icon name="noto:party-popper" class="svg-inline" />
+                </h3>
               </div>
 
               <div class="mb-12 md:mb-0">
                 <h2 class="text-3xl font-bold text-dark mb-4">100%</h2>
-                <h5 class="text-lg font-medium text-slate-700 mb-0">
-                  More flavour<Icon name="fxemoji:chilipepper" class="svg-inline" /> 
-                </h5>
+                <h3 class="text-lg font-medium text-slate-700 mb-0">
+                  Flavour<Icon name="fxemoji:chilipepper" class="svg-inline" />
+                </h3>
               </div>
 
               <div class="">
                 <h2 class="text-3xl font-bold text-dark mb-4">100%</h2>
-                <h5 class="text-lg font-medium text-slate-700 mb-0">Loud<Icon name="noto:drum" class="svg-inline" /> </h5>
+                <h3 class="text-lg font-medium text-slate-700 mb-0">
+                  Loud<Icon name="noto:drum" class="svg-inline" />
+                </h3>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <img
-            src="https://static.wixstatic.com/media/900fc5_a52624fd02ea4d938aa5e2525e0af260~mv2.png/v1/fill/w_208,h_277,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/IMG_0950_heic.png"
+          <Picture
+            src={LadyBubbles}
             class="w-full shadow-lg fancy-border-radius rotate-lg-6"
-            alt=""
+            widths={widths}
+            sizes={sizes}
+            aspectRatio={612 / 815}
+            height={"auto"}
+            formats={["avif", "png", "webp"]}
+            alt="LadyBubbles portait"
           />
         </div>
       </div>
