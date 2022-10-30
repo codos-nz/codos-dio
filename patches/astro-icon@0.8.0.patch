@@ -1,0 +1,191 @@
+diff --git a/README.md b/README.md
+index a3acc30839fdbcf3ce525383d83ab44937233072..33997ba1d757ce439c19f2f64e8691a9643daebd 100644
+--- a/README.md
++++ b/README.md
+@@ -151,8 +151,6 @@ import { Icon } from 'astro-icon';
+ 
+ The `name` prop references a specific icon. It is required.
+ 
+-The `optimize` prop is a boolean. Defaults to `true`. In the future it will control `svgo` options.
+-
+ Both components also accepts any global HTML attributes and `aria` attributes. They will be forwarded to the rendered `<svg>` element.
+ 
+ See the [`Props.ts`](./packages/core/lib/Props.ts) file for more details.
+diff --git a/lib/Icon.astro b/lib/Icon.astro
+index cfd0d9cb0dd5ee71b3e34f885e7df70b418a99be..75545a1643cf1f2b3408a4b119b4a1f2dc485cf4 100644
+--- a/lib/Icon.astro
++++ b/lib/Icon.astro
+@@ -2,7 +2,7 @@
+ import load, { fallback, normalizeProps } from './utils.ts';
+ export { Props } from './Props.ts';
+ 
+-let { name, pack, title, optimize = true, class: className, ...inputProps } = Astro.props;
++let { name, pack, title, class: className, ...inputProps } = Astro.props;
+ let props = {};
+ if (pack) {
+     name = `${pack}:${name}`;
+@@ -10,7 +10,7 @@ if (pack) {
+ 
+ let innerHTML = '';
+ try {
+-    const svg = await load(name, { ...inputProps, class: className }, optimize);
++    const svg = await load(name, { ...inputProps, class: className });
+     innerHTML = svg.innerHTML;
+     props = svg.props;
+ } catch (e) {
+diff --git a/lib/Props.ts b/lib/Props.ts
+index 24903376d375dfc9d450cb8aded870abc39047a1..5bea68ab93e12462448b3b897ba7c23f7538ea24 100644
+--- a/lib/Props.ts
++++ b/lib/Props.ts
+@@ -302,13 +302,9 @@ export interface HTMLAttributes extends AriaAttributes {
+   translate?: "yes" | "no";
+ }
+ 
+-export interface OptimizeOptions {}
+-export type Optimize = boolean | OptimizeOptions;
+-
+ export interface Props extends HTMLAttributes {
+   name: string;
+   pack?: string;
+-  optimize?: Optimize;
+   fill?: string;
+   "fill-opacity"?: number | string;
+   "fill-rule"?: "nonzero" | "evenodd" | "inherit";
+diff --git a/lib/Spritesheet.astro b/lib/Spritesheet.astro
+index 43b3f29f522f47c1101861d73197bfd6aa69cb35..d73f29f9c65c89fe349e4d851ba75262e4f9e3fc 100644
+--- a/lib/Spritesheet.astro
++++ b/lib/Spritesheet.astro
+@@ -2,16 +2,15 @@
+ import { SPRITESHEET_NAMESPACE } from './constants';
+ import load, { fallback } from './utils.ts';
+ import { getUsedSprites } from './context.ts';
+-import { Optimize } from './Props.ts';
+ 
+ export interface Props {
+     optimize?: Optimize;
+ }
+ 
+-const { optimize = true, style, ...props } = Astro.props;
++const { style, ...props } = Astro.props;
+ const names: string[] = await getUsedSprites(Astro.request);
+ const icons = await Promise.all(names.map(name => {
+-    return load(name, {}, optimize)
++    return load(name, {})
+         .then(res => ({ ...res, name }))
+         .catch((e) => {
+                 if (import.meta.env.MODE === 'production') {
+diff --git a/lib/utils.ts b/lib/utils.ts
+index daa2485de57847c11196c059fbd4d1942f2bc366..3e8f6298bc204d9c6cb660efbc6562f4294e86ff 100644
+--- a/lib/utils.ts
++++ b/lib/utils.ts
+@@ -1,8 +1,8 @@
+ /// <reference types="vite/client" />
+ import { SPRITESHEET_NAMESPACE } from "./constants";
+-import { Props, Optimize } from "./Props";
++import { Props } from "./Props";
+ import getFromService from "./resolver";
+-import { optimize as optimizeSVGNative } from "svgo";
++
+ 
+ // Adapted from https://github.com/developit/htmlParser
+ const splitAttrsTokenizer = /([a-z0-9_\:\-]*)\s*?=\s*?(['"]?)(.*?)\2\s+/gim;
+@@ -22,66 +22,11 @@ const splitAttrs = (str) => {
+   return res;
+ };
+ 
+-function optimizeSvg(
+-  contents: string,
+-  name: string,
+-  options: Optimize
+-): string {
+-  return optimizeSVGNative(contents, {
+-    plugins: [
+-      "removeDoctype",
+-      "removeXMLProcInst",
+-      "removeComments",
+-      "removeMetadata",
+-      "removeXMLNS",
+-      "removeEditorsNSData",
+-      "cleanupAttrs",
+-      "minifyStyles",
+-      "convertStyleToAttrs",
+-      {
+-        name: "cleanupIDs",
+-        params: { prefix: `${SPRITESHEET_NAMESPACE}:${name}` },
+-      },
+-      "removeRasterImages",
+-      "removeUselessDefs",
+-      "cleanupNumericValues",
+-      "cleanupListOfValues",
+-      "convertColors",
+-      "removeUnknownsAndDefaults",
+-      "removeNonInheritableGroupAttrs",
+-      "removeUselessStrokeAndFill",
+-      "removeViewBox",
+-      "cleanupEnableBackground",
+-      "removeHiddenElems",
+-      "removeEmptyText",
+-      "convertShapeToPath",
+-      "moveElemsAttrsToGroup",
+-      "moveGroupAttrsToElems",
+-      "collapseGroups",
+-      "convertPathData",
+-      "convertTransform",
+-      "removeEmptyAttrs",
+-      "removeEmptyContainers",
+-      "mergePaths",
+-      "removeUnusedNS",
+-      "sortAttrs",
+-      "removeTitle",
+-      "removeDesc",
+-      "removeDimensions",
+-      "removeStyleElement",
+-      "removeScriptElement",
+-    ],
+-  }).data;
+-}
+-
+ const preprocessCache = new Map();
+-export function preprocess(contents: string, name: string, { optimize }) {
++export function preprocess(contents: string, name: string) {
+   if (preprocessCache.has(contents)) {
+     return preprocessCache.get(contents);
+   }
+-  if (optimize) {
+-    contents = optimizeSvg(contents, name, optimize);
+-  }
+   domParserTokenizer.lastIndex = 0;
+   let result = contents;
+   let token;
+@@ -129,8 +74,7 @@ export const fallback = {
+ 
+ export default async function load(
+   name: string,
+-  inputProps: Props,
+-  optimize: Optimize
++  inputProps: Props
+ ) {
+   const key = name;
+   if (!name) {
+@@ -212,7 +156,7 @@ ${contents}`
+     }
+   }
+ 
+-  const { innerHTML, defaultProps } = preprocess(svg, key, { optimize });
++  const { innerHTML, defaultProps } = preprocess(svg, key);
+ 
+   if (!innerHTML.trim()) {
+     throw new Error(`Unable to parse "${filepath}"!`);
+diff --git a/package.json b/package.json
+index b0453eec5b5d1c26cce6bc525e1ff13194af6164..b0fe36df964251bae0df99e4e4b1f35f1722091f 100644
+--- a/package.json
++++ b/package.json
+@@ -37,7 +37,6 @@
+   "homepage": "https://github.com/natemoo-re/astro-icon#readme",
+   "dependencies": {
+     "node-fetch": "^3.1.0",
+-    "resolve-pkg": "^2.0.0",
+-    "svgo": "^2.8.0"
++    "resolve-pkg": "^2.0.0"
+   }
+ }

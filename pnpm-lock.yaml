@@ -1,5 +1,10 @@
 lockfileVersion: 5.4
 
+patchedDependencies:
+  astro-icon@0.8.0:
+    hash: wusl73lrifdwuuoaga5vfkotky
+    path: patches/astro-icon@0.8.0.patch
+
 specifiers:
   '@astrojs/image': ^0.11.0
   '@astrojs/tailwind': ^2.1.1
@@ -21,7 +26,7 @@ specifiers:
 dependencies:
   '@astrojs/image': 0.11.0_sharp@0.31.1
   astro-compress: 1.0.12
-  astro-icon: 0.8.0
+  astro-icon: 0.8.0_wusl73lrifdwuuoaga5vfkotky
   is-ci: 3.0.1
   micromodal: 0.4.10
   sass: 1.55.0
@@ -778,13 +783,14 @@ packages:
       terser: 5.15.1
     dev: false
 
-  /astro-icon/0.8.0:
+  /astro-icon/0.8.0_wusl73lrifdwuuoaga5vfkotky:
     resolution: {integrity: sha512-sCzhZcl46BIyLJVg89hq5J4uQABn2psmGvK4cUaxib+M/kBI3TrPy1w3g2O5h/WcrTHLVN9LyxjgkD4lEJJFpw==}
     dependencies:
       node-fetch: 3.2.10
       resolve-pkg: 2.0.0
       svgo: 2.8.0
     dev: false
+    patched: true
 
   /astro/1.6.1_sass@1.55.0:
     resolution: {integrity: sha512-fECZFVxoSI0Yt76M57m6jf6jJ14I8IHfy0hR+WuahpWsbshijDBrK8RQ6pNwhaE1JzIbBQtYa34+BY0RSkwKNg==}
