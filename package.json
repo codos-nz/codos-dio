@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "prebuild": "is-ci && npm install -g pnpm",
-    "build": "pnpm run clean && pnpm install --frozen-lockfile && pnpm run astro build",
+    "build": "pnpm run clean && pnpm run clean && pnpm install --frozen-lockfile && pnpm run astro build",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",
