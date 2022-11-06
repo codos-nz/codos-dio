@@ -4,88 +4,20 @@ import ContentSection from "~/components/content-section.astro";
 import CompatibilityList from "~/components/compatibility-list.astro";
 import FancyCard from "~/components/fancy-card.astro";
 import SvgTextWrapper from "~/components/svg-text-icon.astro";
-
-const frameworks = [
-  {
-    title: "React",
-    icon: "frameworks/react",
-    url: "https://reactjs.org/",
-  },
-  {
-    title: "Preact",
-    icon: "frameworks/preact",
-    url: "https://preactjs.com/",
-  },
-  {
-    title: "Svelte",
-    icon: "frameworks/svelte",
-    url: "https://svelte.dev/",
-  },
-  {
-    title: "Vue",
-    icon: "frameworks/vue",
-    url: "https://vuejs.org/",
-  },
-  {
-    title: "Solid",
-    icon: "frameworks/solid",
-    url: "https://www.solidjs.com/",
-  },
-  {
-    title: "Lit",
-    icon: "frameworks/lit",
-    url: "https://lit.dev/",
-  },
-];
-
-const platforms = [
-  {
-    title: "Netlify",
-    icon: "platforms/netlify",
-    url: "https://www.netlify.com/",
-  },
-  {
-    title: "Vercel",
-    icon: "platforms/vercel",
-    url: "https://vercel.com/",
-  },
-  {
-    title: "Cloudflare",
-    icon: "fa-brands:cloudflare",
-    url: "https://pages.cloudflare.com/",
-  },
-  {
-    title: "Render",
-    icon: "platforms/render",
-    url: "https://render.com/",
-  },
-  {
-    title: "GitHub",
-    icon: "fa-brands:github",
-    url: "https://pages.github.com/",
-  },
-  {
-    title: "GitLab",
-    icon: "fa-brands:gitlab",
-    url: "https://docs.gitlab.com/ee/user/project/pages/",
-  },
-];
 ---
 
 <ContentSection title="About Us" id="about-us">
-  <!-- <Fragment slot="lead"> -->
-    <div class="max-w-xl text-2xl font-extrabold text-center">
-      <SvgTextWrapper svgText="Drag It Out"
-        ><Icon name="icon-wordmark" class="svg-inline" />
-      </SvgTextWrapper>{" "}is a Christchurch run drag queen events company{" "}
-      that provides <span class="gradient-text-pride">LGBTQIA+</span>{" "}safe
-      events around the <span class="text-primary">Canterbury</span>{
-        " "
-      }region.<br />
-      We like to provide fun family friendly <span class="text-primary"
-        >entertainment</span
-      >{" "}for all ages with lots of energy and laughter for all.
-    </div>
-  <!-- </Fragment> -->
+  <div class="max-w-xl text-2xl font-extrabold text-center">
+    <SvgTextWrapper svgText="Drag It Out"
+      ><Icon name="icon-wordmark" class="svg-inline" />
+    </SvgTextWrapper>{" "}is a Christchurch run drag queen events company{" "}
+    that provides <span class="gradient-text-pride">LGBTQIA+</span>{" "}safe
+    events around the <span class="text-primary">Canterbury</span>{
+      " "
+    }region.<br />
+    We like to provide fun family friendly <span class="text-primary"
+      >entertainment</span
+    >{" "}for all ages with lots of energy and laughter for all.
+  </div>
   <FancyCard />
 </ContentSection>

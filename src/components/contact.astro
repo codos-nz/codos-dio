@@ -1,45 +1,9 @@
 ---
 import ContentSection from "~/components/content-section.astro";
-import ShowcaseCard from "~/components/showcase-card.astro";
-import rawEvents from "~/data/showcase/events.json";
-const { events } = JSON.parse(JSON.stringify(rawEvents));
 ---
 
 <ContentSection title="Contact" id="contact">
   <Fragment slot="lead">
-    CODOS is <span class="text-primary">versatile</span>.{" "}
-    <span class="text-primary">Explore</span> what's possible and get{" "}
-    <span class="text-primary">inspired</span>.
+    Book A <span class="text-primary">Queen</span>.{" "} Today!
   </Fragment>
-  <div class="max-w-6xl space-y-2">
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {
-        events.map(
-          ({ name, images, url, datetime_summary, location_summary }) => (
-            <ShowcaseCard
-              title={
-                String(name).toUpperCase().startsWith("DRAG IT OUT")
-                  ? String(name)
-                      .split(/([Pp][Rr][Ee][Ss][Ee][Nn][Tt][Ss]\s)+/g)
-                      .at(-1)
-                  : "Drag It Out"
-              }
-              image={images.images[0].original_url}
-              url={url}
-              date={datetime_summary}
-              location={location_summary}
-            />
-          )
-        )
-      }
-    </div>
-    <p class="text-sm text-right">
-      <a
-        class="text-primary"
-        href="https://www.eventfinda.co.nz/user/dragitoutchch/favourites/events"
-      >
-        ...and more &rarr;</a
-      >
-    </p>
-  </div>
 </ContentSection>
