@@ -1,0 +1,41 @@
+---
+const { dateString } = Astro.props;
+const loccale = "en-GB";
+const T = new Date(String(dateString));
+const day = T.getDate();
+const week = T.toLocaleString(loccale, {
+  weekday: "long",
+});
+const month = T.toLocaleString(loccale, {
+  month: "short",
+}).toUpperCase();
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  aria-label="Calendar"
+  viewBox="0 0 512 512"
+  class="svg-flex"
+>
+  <rect width="512" height="512" rx="77" fill="#dee"></rect>
+  <path
+    d="m77 0h358a77 77 0 0 1 77 77v103h-512v-103a77 77 0 0 1 77-77z"
+    fill="#d34"></path>
+  <g fill="#eab">
+    <circle cx="470" cy="142" r="14"></circle>
+    <circle cx="470" cy="100" r="14"></circle>
+    <circle cx="427" cy="142" r="14"></circle>
+    <circle cx="427" cy="100" r="14"></circle>
+    <circle cx="384" cy="142" r="14"></circle>
+    <circle cx="384" cy="100" r="14"></circle>
+  </g>
+  <g fill="#677" font-family="monospace" text-anchor="middle"
+    ><text fill="#fff" font-size="140" x="160" y="164" id="m">{month}</text
+    ><text font-size="256" x="256" y="400" id="d">{day}</text><text
+      font-size="64"
+      x="256"
+      y="480"
+      id="w">{week}</text
+    >
+  </g>
+</svg>

@@ -1,6 +1,7 @@
 ---
 import ContentSection from "~/components/content-section.astro";
 import ShowcaseCard from "~/components/showcase-card.astro";
+import NewEventsCard from "~/components/new-events.astro";
 import rawEvents from "~/data/showcase/events.json";
 const { events } = JSON.parse(JSON.stringify(rawEvents));
 ---
@@ -33,13 +34,15 @@ const { events } = JSON.parse(JSON.stringify(rawEvents));
         )
       }
     </div>
-    <p class="text-sm text-right">
+    <p class="text-lg text-right">
       <a
-        class="text-primary"
+        class="text-primary after:content-['_↗']"
         href="https://www.eventfinda.co.nz/user/dragitoutchch/favourites/events"
+        target="_blank">
+        ...and more </a
       >
-        ...and more &rarr;</a
-      >
-    </p>
+    </p>v
+    <br />
+    <NewEventsCard />
   </div>
 </ContentSection>

@@ -1,95 +1,204 @@
 {
-  "@attributes": {
-    "count": 4
-  },
-  "events": [
-    {
-      "id": 764938,
-      "url": "https://www.eventfinda.co.nz/2022/drag-it-out-presents-balls-bingo-greymouth/greymouth",
-      "name": "Drag It Out presents Balls N Bingo Greymouth",
-      "description": "Balls n Bingo is coming to Greymouth.\r\n\r\nIt's always a great night with 2 of Christchurch’s most fabulous drag queens Miss Shaniqwa & Lady Bubbles. If you want to be entertained and have a night full of laughter, ...",
-      "location_summary": "Australasian Hotel, Greymouth, Grey",
-      "is_cancelled": false,
-      "datetime_summary": "Friday 11 November",
-      "images": {
-        "@attributes": {
-          "count": 1
-        },
-        "images": [
-          {
-            "is_primary": true,
-            "original_url": "https://cdn.eventfinda.co.nz/uploads/events/1768647-764938.png"
-          }
-        ]
-      }
-    },
-    {
-      "id": 764941,
-      "url": "https://www.eventfinda.co.nz/2022/drag-it-out-presents-balls-bingo-akaroa/banks-peninsula",
-      "name": "Drag It Out presents Balls N Bingo Akaroa",
-      "description": "Balls n Bingo is coming to Akaroa.\r\n\r\nIt's always a great night with 2 of Christchurch’s most fabulous drag queens Miss Shaniqwa & Lady Bubbles. If you want to be entertained and have a night full of laughter, ...",
-      "location_summary": "The Grand Hotel, Banks Peninsula, Christchurch District",
-      "is_cancelled": false,
-      "datetime_summary": "Friday 18 November",
-      "images": {
-        "@attributes": {
-          "count": 1
-        },
-        "images": [
-          {
-            "is_primary": true,
-            "original_url": "https://cdn.eventfinda.co.nz/uploads/events/1768095-764941.png"
-          }
-        ]
-      }
-    },
-    {
-      "id": 764942,
-      "url": "https://www.eventfinda.co.nz/2022/drag-it-out-presents-balls-bingo-amberley/amberley",
-      "name": "Drag It Out presents Balls N Bingo Amberley",
-      "description": "Balls n Bingo is coming back to Amberley.\r\n\r\nIt's always a great night with 2 of Christchurch’s most fabulous drag queens Miss Shaniqwa & Lady Bubbles. \r\n\r\nIf you want to be entertained and have a night full of ...",
-      "location_summary": "The Amberley Hotel, Amberley, Hurunui",
-      "is_cancelled": false,
-      "datetime_summary": "Saturday 19 November",
-      "images": {
-        "@attributes": {
-          "count": 1
-        },
-        "images": [
-          {
-            "is_primary": true,
-            "original_url": "https://cdn.eventfinda.co.nz/uploads/events/1768625-764942.png"
-          }
-        ]
-      }
-    },
-    {
-      "id": 764928,
-      "url": "https://www.eventfinda.co.nz/2022/drag-it-out-presents-balls-bingo-ferrymead2/christchurch",
-      "name": "Drag It Out presents Balls N Bingo Ferrymead",
-      "description": "Balls n Bingo is back at Ferrymead just in time for Christmas. \r\n\r\nIt's always a great night with 2 of Christchurch’s most fabulous drag queens Miss Shaniqwa & Lady Bubbles. If you want to be entertained and have a ...",
-      "location_summary": "The Good Home, Christchurch",
-      "is_cancelled": false,
-      "datetime_summary": "Thursday  1 December",
-      "images": {
-        "@attributes": {
-          "count": 3
-        },
-        "images": [
-          {
-            "is_primary": true,
-            "original_url": "https://cdn.eventfinda.co.nz/uploads/events/1787084-764928.png"
-          },
-          {
-            "is_primary": false,
-            "original_url": "https://cdn.eventfinda.co.nz/uploads/events/1768058-764928.jpg"
-          },
-          {
-            "is_primary": false,
-            "original_url": "https://cdn.eventfinda.co.nz/uploads/events/1768059-764928.jpg"
-          }
-        ]
-      }
-    }
-  ]
+	"@attributes": {
+		"count": 4
+	},
+	"events": [
+		{
+			"id": 764938,
+			"url": "https:\/\/www.eventfinda.co.nz\/2022\/drag-it-out-presents-balls-bingo-greymouth\/greymouth",
+			"name": "Drag It Out presents Balls N Bingo Greymouth",
+			"description": "Balls n Bingo is coming to Greymouth.\r\n\r\nIt's always a great night with 2 of Christchurch’s most fabulous drag queens Miss Shaniqwa & Lady Bubbles. If you want to be entertained and have a night full of laughter, ...",
+			"datetime_start": "2022-11-11 18:30:00",
+			"location_summary": "Australasian Hotel, Greymouth, Grey",
+			"is_cancelled": true,
+			"datetime_summary": "Fri 11 Nov",
+			"ticket_types": {
+				"@attributes": {
+					"count": 1
+				},
+				"ticket_types": [
+					{
+						"id": 853048,
+						"name": "General Admission",
+						"price": "20.00",
+						"is_ticketed": true,
+						"description": "If you would like to sit together please buy all your tickets using one name.",
+						"minimum_purchase_quantity": 1,
+						"is_addon": false,
+						"onsale_at": null,
+						"offsale_at": null
+					}
+				]
+			},
+			"images": {
+				"@attributes": {
+					"count": 1
+				},
+				"images": [
+					{
+						"is_primary": true,
+						"original_url": "https:\/\/cdn.eventfinda.co.nz\/uploads\/events\/1768647-764938.png"
+					}
+				]
+			}
+		},
+		{
+			"id": 764941,
+			"url": "https:\/\/www.eventfinda.co.nz\/2022\/drag-it-out-presents-balls-bingo-akaroa\/banks-peninsula",
+			"name": "Drag It Out presents Balls N Bingo Akaroa",
+			"description": "Balls n Bingo is coming to Akaroa.\r\n\r\nIt's always a great night with 2 of Christchurch’s most fabulous drag queens Miss Shaniqwa & Lady Bubbles. If you want to be entertained and have a night full of laughter, ...",
+			"datetime_start": "2022-11-18 18:00:00",
+			"location_summary": "The Grand Hotel, Banks Peninsula, Christchurch District",
+			"is_cancelled": false,
+			"datetime_summary": "Fri 18 Nov",
+			"ticket_types": {
+				"@attributes": {
+					"count": 1
+				},
+				"ticket_types": [
+					{
+						"id": 853051,
+						"name": "General Admission",
+						"price": "20.00",
+						"is_ticketed": true,
+						"description": "",
+						"minimum_purchase_quantity": 1,
+						"is_addon": false,
+						"onsale_at": null,
+						"offsale_at": null
+					}
+				]
+			},
+			"images": {
+				"@attributes": {
+					"count": 1
+				},
+				"images": [
+					{
+						"is_primary": true,
+						"original_url": "https:\/\/cdn.eventfinda.co.nz\/uploads\/events\/1768095-764941.png"
+					}
+				]
+			}
+		},
+		{
+			"id": 764942,
+			"url": "https:\/\/www.eventfinda.co.nz\/2022\/drag-it-out-presents-balls-bingo-amberley\/amberley",
+			"name": "Drag It Out presents Balls N Bingo Amberley",
+			"description": "Balls n Bingo is coming back to Amberley.\r\n\r\nIt's always a great night with 2 of Christchurch’s most fabulous drag queens Miss Shaniqwa & Lady Bubbles. \r\n\r\nIf you want to be entertained and have a night full of ...",
+			"datetime_start": "2022-11-19 18:30:00",
+			"location_summary": "The Amberley Hotel, Amberley, Hurunui",
+			"is_cancelled": false,
+			"datetime_summary": "Sat 19 Nov",
+			"ticket_types": {
+				"@attributes": {
+					"count": 2
+				},
+				"ticket_types": [
+					{
+						"id": 853052,
+						"name": "General Admission",
+						"price": "20.00",
+						"is_ticketed": true,
+						"description": "These are to add on 1 or 2 tickets to your table",
+						"minimum_purchase_quantity": 1,
+						"is_addon": false,
+						"onsale_at": null,
+						"offsale_at": null
+					},
+					{
+						"id": 855426,
+						"name": "Table of 6 - Individual admission",
+						"price": "20.00",
+						"is_ticketed": true,
+						"description": "6 books included 5 games 6 up",
+						"minimum_purchase_quantity": 6,
+						"is_addon": false,
+						"onsale_at": null,
+						"offsale_at": null
+					}
+				]
+			},
+			"images": {
+				"@attributes": {
+					"count": 1
+				},
+				"images": [
+					{
+						"is_primary": true,
+						"original_url": "https:\/\/cdn.eventfinda.co.nz\/uploads\/events\/1768625-764942.png"
+					}
+				]
+			}
+		},
+		{
+			"id": 764928,
+			"url": "https:\/\/www.eventfinda.co.nz\/2022\/drag-it-out-presents-balls-bingo-ferrymead2\/christchurch",
+			"name": "Drag It Out presents Balls N Bingo Ferrymead",
+			"description": "Balls n Bingo is back at Ferrymead just in time for Christmas. \r\n\r\nIt's always a great night with 2 of Christchurch’s most fabulous drag queens Miss Shaniqwa & Lady Bubbles. If you want to be entertained and have a ...",
+			"datetime_start": "2022-12-01 18:30:00",
+			"location_summary": "The Good Home, Christchurch",
+			"is_cancelled": false,
+			"datetime_summary": "Thu  1 Dec",
+			"ticket_types": {
+				"@attributes": {
+					"count": 3
+				},
+				"ticket_types": [
+					{
+						"id": 853039,
+						"name": "Table of 4 - Individual Admission",
+						"price": "20.00",
+						"is_ticketed": true,
+						"description": "4 books 5 games",
+						"minimum_purchase_quantity": 4,
+						"is_addon": false,
+						"onsale_at": null,
+						"offsale_at": null
+					},
+					{
+						"id": 853040,
+						"name": "Table of 6 - Individual Admission",
+						"price": "20.00",
+						"is_ticketed": true,
+						"description": "6 books 5 games",
+						"minimum_purchase_quantity": 6,
+						"is_addon": false,
+						"onsale_at": null,
+						"offsale_at": null
+					},
+					{
+						"id": 853041,
+						"name": "General Admission",
+						"price": "20.00",
+						"is_ticketed": true,
+						"description": "please only use these ticket if you need to add 1 or 2 people to your table.",
+						"minimum_purchase_quantity": 1,
+						"is_addon": false,
+						"onsale_at": null,
+						"offsale_at": null
+					}
+				]
+			},
+			"images": {
+				"@attributes": {
+					"count": 3
+				},
+				"images": [
+					{
+						"is_primary": true,
+						"original_url": "https:\/\/cdn.eventfinda.co.nz\/uploads\/events\/1787084-764928.png"
+					},
+					{
+						"is_primary": false,
+						"original_url": "https:\/\/cdn.eventfinda.co.nz\/uploads\/events\/1768058-764928.jpg"
+					},
+					{
+						"is_primary": false,
+						"original_url": "https:\/\/cdn.eventfinda.co.nz\/uploads\/events\/1768059-764928.jpg"
+					}
+				]
+			}
+		}
+	]
 }
