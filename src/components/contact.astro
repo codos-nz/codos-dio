@@ -1,9 +1,205 @@
 ---
 import ContentSection from "~/components/content-section.astro";
+import { Icon } from "astro-icon";
+import { uuid } from "~/utils";
+const id = uuid();
 ---
 
 <ContentSection title="Contact" id="contact">
   <Fragment slot="lead">
     Book A <span class="text-primary">Queen</span>.{" "} Today!
   </Fragment>
+  <div class="max-w-6xl space-y-2 container mx-auto">
+    <div class="lg:w-1/2 md:w-2/3 mx-auto relative">
+      <div
+        id="contact-form-overlay-loading"
+        class="absolute bg-[var(--color-background-offset)] text-[var(--color-text-offset)] bg-opacity-60 z-10 h-full w-full flex items-center justify-center rounded-lg hidden"
+      >
+        <div class="flex items-center">
+          <span class="text-xl mr-4">Loading</span>
+          <svg
+            class="animate-spin h-5 w-5 text-gray-600"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            >
+            </path>
+          </svg>
+          <!-- end loading icon -->
+        </div>
+      </div>
+      <div
+        id="contact-form-overlay-successful"
+        class="absolute bg-emerald-500 text-neutral-50 bg-opacity-90 z-10 h-full w-full flex items-center justify-center rounded-lg hidden"
+      >
+        <span class="inline-flex items-center">
+          <Icon class="w-9" name="checkmark" />
+          <span class="text-xl after:content-['_😊']"
+            >Email sent successfully!</span
+          >
+        </span>
+      </div>
+      <div
+        id="contact-form-overlay-error"
+        class="absolute bg-red-900 text-neutral-50 bg-opacity-90 z-10 h-full w-full flex flex-col items-center justify-center rounded-lg hidden"
+      >
+        <div>
+          <span class="inline-flex items-center">
+            <Icon class="w-9" name="errormark" />
+            <span class="text-xl after:content-['_😳']"
+              >Something went wrong</span
+            >
+          </span>
+        </div>
+
+        <button
+          id="try-agian"
+          type="button"
+          class="text-lg underline select-none cursor-pointer"
+        >
+          Try Again?
+        </button>
+      </div>
+      <form
+        id="contact-form"
+        method="post"
+        data-method={"post"}
+        action={`?astro:form=${id}`}
+        data-astro-form
+      >
+        <input
+          type="hidden"
+          name="subject"
+          value="New Submission from DragItOut website"
+        />
+        <div class="flex flex-wrap -m-2">
+          <div class="p-2 w-1/2">
+            <div class="relative">
+              <label for="name" class="leading-7 text-sm text-default"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full bg-[var(--color-background)] bg-opacity-50 rounded border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)] text-base outline-none text-[var(--color-text-offset)] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              />
+            </div>
+          </div>
+          <div class="p-2 w-1/2">
+            <div class="relative">
+              <label for="email" class="leading-7 text-sm text-default"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full bg-[var(--color-background)] bg-opacity-50 rounded border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)] text-base outline-none text-[var(--color-text-offset)] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              />
+            </div>
+          </div>
+          <div class="p-2 w-full">
+            <div class="relative">
+              <label for="message" class="leading-7 text-sm text-default"
+                >Message</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                class="resize-y w-full bg-[var(--color-background)] bg-opacity-50 rounded border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)] text-base outline-none text-[var(--color-text-offset)] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              ></textarea>
+            </div>
+          </div>
+          <div class="p-2 w-full">
+            <button
+              type="submit"
+              class="flex mx-auto text-white bg-[var(--color-secondary)] border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 hover:shadow rounded text-lg font-semibold"
+              >Send</button
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </ContentSection>
+
+<script>
+  function isAstroForm(target) {
+    return target
+      ? "dataset" in target && (target as HTMLElement).dataset.astroForm === ""
+      : false;
+  }
+  for (const form of document.querySelectorAll(`form[data-astro-form][id]`)) {
+    const key = `astro-form[#${form.id}]`;
+    const innerHTML = window.sessionStorage.getItem(key);
+    if (innerHTML) {
+      form.innerHTML = innerHTML;
+    }
+  }
+  function onSuccess() {
+    const loadingElement = document.querySelector(
+      "#contact-form-overlay-loading"
+    );
+    loadingElement.classList.add("hidden");
+    const successfulElement = document.querySelector(
+      "#contact-form-overlay-successful"
+    );
+    successfulElement.classList.remove("hidden");
+  }
+
+  function onFailure() {
+    const loadingElement = document.querySelector(
+      "#contact-form-overlay-loading"
+    );
+    loadingElement.classList.add("hidden");
+    const errorElement = document.querySelector("#contact-form-overlay-error");
+    errorElement.classList.remove("hidden");
+  }
+
+  const tryAgainButton = document.querySelector("#try-agian");
+  tryAgainButton.addEventListener("click", () => {
+    const errorElement = document.querySelector("#contact-form-overlay-error");
+    errorElement.classList.add("hidden");
+  });
+
+  window.addEventListener("submit", async (event) => {
+    if (!isAstroForm(event.target)) return;
+    event.preventDefault();
+    const parentElement = document.querySelector(
+      "#contact-form-overlay-loading"
+    );
+    parentElement.classList.remove("hidden");
+    const data = Object.fromEntries(
+      new FormData(event.target as HTMLFormElement).entries()
+    );
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const { success } = await response.json();
+    if (success) {
+      (event.target as HTMLFormElement).reset();
+      onSuccess();
+    } else {
+      onFailure();
+    }
+  });
+</script>
