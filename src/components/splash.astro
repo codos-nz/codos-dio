@@ -14,12 +14,16 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
     <HeroImage />
   </div>
   <div class="relative m-auto max-w-3xl">
-    <Icon name="icon-wordmark" class="object-cover mx-auto pt-8 w-5/6 block sm:hidden" />
+    <Icon
+      name="icon-wordmark"
+      class="object-cover mx-auto pt-8 w-5/6 block sm:hidden"
+    />
     <Picture
       src={PerformerBoth}
       class="animate-float mx-auto w-5/6 sm:w-2/3 pt-8"
       widths={widths}
       sizes={sizes}
+      aspectRatio={800 / 1051}
       loading={"eager"}
       formats={["avif", "png", "webp"]}
       alt="Two drag performers appearing in the void"

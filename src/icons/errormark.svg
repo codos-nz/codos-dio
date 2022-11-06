@@ -1,5 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px" role="img" preserveAspectRatio="x64Y64 meet"
-    viewBox="0 0 154 154">
+<svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px" role="img" viewBox="0 0 154 154">
     <g fill="none" stroke="#F44812" stroke-width="2">
         <circle cx="77" cy="77" r="72" style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"></circle>
         <circle id="colored" fill="#F44812" cx="77" cy="77" r="72"
