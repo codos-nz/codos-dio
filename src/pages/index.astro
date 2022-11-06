@@ -10,29 +10,44 @@ import Splash from "~/components/splash.astro";
 import "~/styles/index.css";
 
 const { site } = Astro;
-const image = new URL("social.jpg", site);
-const description =
-  "CODOS offers a new kind of site builder for the modern web. Lightning-fast performance meets amazing end-user experience.";
+const {
+  title = "Drag It Out",
+  description = "Drag It Out entertainment offers you amazing shows,lots of Comedy laughter and fun for the whole fam",
+} = Astro.props;
+const ogImgURL = new URL("social.jpg", site).href;
+const ogImgAlt =
+  "Drag It Out entertainment offers you amazing shows,lots of Comedy laughter and fun for the whole fam";
+const canonical = new URL(Astro.url.pathname, site).href;
 ---
 
 <html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <GoogleFontsOptimizer
       url="https://fonts.googleapis.com/css2?family=Shrikhand:wght@400;800&display=swap"
     />
-    <title>DRAG IT OUT</title>
+    <title>{title}</title>
     <meta name="description" content={description} />
-    <!-- social media -->
-    <meta property="og:title" content="Drag It Out" />
+    <!-- OpenGraph Tags -->
+    <meta property="og:title" content={title} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
-    <meta property="og:url" content={site} />
+    <meta property="og:image" content={ogImgURL} />
+    <meta property="og:image:alt" content={ogImgAlt} />
+    <meta name="description" property="og:description" content={description} />
+    <meta property="og:site_name" content={title} />
+    <!-- Twitter Tags -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="swithinbank" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImgURL} />
+    <meta name="twitter:image:alt" content={ogImgAlt} />
 
     <!-- initialize theme -->
     <script is:inline>
