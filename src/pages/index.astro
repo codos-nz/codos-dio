@@ -1,4 +1,5 @@
 ---
+import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
 import AboutUs from "~/components/aboutus.astro";
 import Events from "~/components/events.astro";
 import Footer from "~/components/footer.astro";
@@ -20,7 +21,9 @@ const description =
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-
+    <GoogleFontsOptimizer
+      url="https://fonts.googleapis.com/css2?family=Shrikhand:wght@400;800&display=swap"
+    />
     <title>DRAG IT OUT</title>
     <meta name="description" content={description} />
     <!-- social media -->
@@ -44,13 +47,15 @@ const description =
         document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
       }
 
-      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
-        if (!localStorage.getItem("theme")) {
-          document.documentElement.dataset.theme = event.matches
-            ? "dark"
-            : "light";
-        }
-      });
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (event) => {
+          if (!localStorage.getItem("theme")) {
+            document.documentElement.dataset.theme = event.matches
+              ? "dark"
+              : "light";
+          }
+        });
     </script>
   </head>
   <body

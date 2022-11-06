@@ -15,7 +15,7 @@ const navItems = [
 >
   <a class="flex items-center gap-3 hover:!text-default" href="#">
     <h1 class="sr-only">Drag It Out</h1>
-    <Icon name="icon-wordmark-white-outline" class="hidden h-10 sm:block" />
+    <Icon name="icon-wordmark" class="hidden h-10 sm:block" />
   </a>
   <div>
     <div class="flex items-center gap-6">
@@ -24,7 +24,7 @@ const navItems = [
           {
             navItems.map(({ title, url }) => (
               <li>
-                <a class="text-sm" href={url}>
+                <a class="text-base font-extralight font-['Shrikhand']" href={url}>
                   {title}
                 </a>
               </li>
@@ -63,7 +63,7 @@ const navItems = [
               {
                 navItems.map(({ title, url }) => (
                   <li>
-                    <a class="block py-4 text-xl text-center" href={url}>
+                    <a class="block py-4 text-xl text-center font-extralight font-['Shrikhand']" href={url}>
                       {title}
                     </a>
                   </li>
@@ -128,7 +128,4 @@ const navItems = [
     @apply block;
   }
 
-  svg {
-    fill: currentColor;
-  }
 </style>
