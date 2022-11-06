@@ -2,8 +2,26 @@
 import ContentSection from "~/components/content-section.astro";
 import ShowcaseCard from "~/components/showcase-card.astro";
 import NewEventsCard from "~/components/new-events.astro";
-import rawEvents from "~/data/showcase/events.json";
-const { events } = JSON.parse(JSON.stringify(rawEvents));
+const paramsObj = {
+  row: "20",
+  username: import.meta.env.USERNAME,
+  fields: import.meta.env.QUERY_FIELDS,
+  date_format: "%e %b",
+};
+const baseUrl = new URL(
+  import.meta.env.EVENTFINDA_BASE_URL +
+    `?${new URLSearchParams(paramsObj).toString()}`
+);
+const headers = new Headers({
+  "Content-Type": "application/json",
+  Authorization: import.meta.env.API_KEY,
+  cache: "default",
+  mode: "cors",
+  method: "GET",
+  "Cache-Control": "s-maxage=1, stale-while-revalidate",
+});
+const response = await fetch(baseUrl, { headers });
+const { events } = await response.json();
 ---
 
 <ContentSection title="Upcoming Events" id="events">
@@ -38,11 +56,12 @@ const { events } = JSON.parse(JSON.stringify(rawEvents));
       <a
         class="text-primary after:content-['_↗']"
         href="https://www.eventfinda.co.nz/user/dragitoutchch/favourites/events"
-        target="_blank">
-        ...and more </a
+        target="_blank"
       >
-    </p>v
+        ...and more
+      </a>
+    </p>
     <br />
-    <NewEventsCard />
+    <NewEventsCard events={events} />
   </div>
 </ContentSection>

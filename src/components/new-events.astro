@@ -1,22 +1,9 @@
 ---
+const { events } = Astro.props;
 import { Picture } from "@astrojs/image/components";
 import Calendar from "./calendar.astro";
-import rawEvents from "~/data/showcase/events.json";
-const { events } = JSON.parse(JSON.stringify(rawEvents));
 const widths = [450, 800];
 const sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
-const convertDateStringToDates = (dateString) => {
-  const loccale = "en-GB";
-  const T = new Date(String(dateString));
-  const day = T.getDate();
-  const week = T.toLocaleString(loccale, {
-    weekday: "long",
-  });
-  const month = T.toLocaleString(loccale, {
-    month: "short",
-  }).toUpperCase();
-  return { day, week, month };
-};
 ---
 
 <div
@@ -30,7 +17,6 @@ const convertDateStringToDates = (dateString) => {
         description,
         url,
         datetime_start,
-        // time=convertDateStringToDates(datetime_start),
         datetime_summary,
         location_summary,
         ticket_types: { ticket_types: ticketTypes },
