@@ -3,7 +3,7 @@ import { Icon } from "astro-icon";
 import ThemeSwitcher from "~/components/theme-switcher.astro";
 
 const navItems = [
-  { title: "Events", url: "#events" },
+  { title: "Events", url: "/events" },
   { title: "About Us ", url: "#about-us" },
   { title: "Contact", url: "#contact" },
 ];
@@ -11,9 +11,9 @@ const navItems = [
 
 <header
   id="page-header"
-  class="absolute bottom-0 z-20 flex items-center justify-between w-full px-8 py-4 text-white border-b border-transparent"
+  class="absolute bottom-0 z-20 flex items-center justify-between w-full px-8 py-4 text-white border-b border-transparent fixed-header"
 >
-  <a class="flex items-center gap-3 hover:!text-default" href="#">
+  <a class="flex items-center gap-3 hover:!text-default" href="/">
     <h1 class="sr-only">Drag It Out</h1>
     <Icon name="icon-wordmark" class="hidden h-10 sm:block" />
   </a>
@@ -82,14 +82,17 @@ const navItems = [
     </div>
   </div>
 </header>
-
+<script is:inline>
+  if (window.location.pathname === "/") {
+    const header = document.querySelector("#page-header");
+    header.classList.remove("fixed-header");
+  }
+</script>
 <script>
   import MicroModal from "micromodal";
 
   const menuModalId = "menu-modal";
 
-  const header: HTMLElement = document.querySelector("#page-header");
-  const page = document.documentElement;
   const menu = document.querySelector(`#${menuModalId} ul`);
   const openNavButton = document.querySelector("#open-nav-button");
   const closeNavButton = document.querySelector("#close-nav-button");
@@ -104,11 +107,6 @@ const navItems = [
 
   openNavButton.addEventListener("click", openMenu);
   closeNavButton.addEventListener("click", closeMenu);
-
-  document.addEventListener("scroll", () => {
-    const d = page.clientHeight - page.scrollTop - header.offsetHeight;
-    header.classList.toggle("fixed-header", d < 0);
-  });
 
   menu.addEventListener("click", (event) => {
     if ((event.target as HTMLElement).tagName === "A") {

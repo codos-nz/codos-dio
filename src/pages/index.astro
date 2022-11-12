@@ -1,5 +1,5 @@
 ---
-import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
+import DefaultLayout from "~/layouts/DefaultLayout.astro";
 import AboutUs from "~/components/aboutus.astro";
 import Events from "~/components/events.astro";
 import Footer from "~/components/footer.astro";
@@ -20,17 +20,8 @@ const ogImgAlt =
 const canonical = new URL(Astro.url.pathname, site).href;
 ---
 
-<html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <GoogleFontsOptimizer
-      url="https://fonts.googleapis.com/css2?family=Shrikhand:wght@400;800&display=swap"
-    />
-    <title>{title}</title>
+<DefaultLayout pageTitle={title}>
+  <Fragment slot="seo-header">
     <meta name="description" content={description} />
     <!-- OpenGraph Tags -->
     <meta property="og:title" content={title} />
@@ -48,42 +39,22 @@ const canonical = new URL(Astro.url.pathname, site).href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImgURL} />
     <meta name="twitter:image:alt" content={ogImgAlt} />
-
-    <!-- initialize theme -->
-    <script is:inline>
-      const themeSaved = localStorage.getItem("theme");
-
-      if (themeSaved) {
-        document.documentElement.dataset.theme = themeSaved;
-      } else {
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
-      }
-
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (event) => {
-          if (!localStorage.getItem("theme")) {
-            document.documentElement.dataset.theme = event.matches
-              ? "dark"
-              : "light";
-          }
-        });
-    </script>
-  </head>
-  <body
-    class="h-full overflow-x-hidden text-base bg-default text-default selection:bg-secondary selection:text-white antialiased"
-  >
-    <Header />
+  </Fragment>
+  <Fragment slot="splash">
     <Splash />
-    <div class="px-8 py-32 space-y-24">
-      <Intro />
-      <Events />
-      <AboutUs />
-      <Contact />
-    </div>
-    <Footer />
-  </body>
-</html>
+  </Fragment>
+  <Fragment slot="main-content">
+    <Intro />
+    <Events />
+    <AboutUs />
+    <Contact />
+    <script>
+      const header: HTMLElement = document.querySelector("#page-header");
+      const page = document.documentElement;
+      document.addEventListener("scroll", () => {
+        const d = page.clientHeight - page.scrollTop - header.offsetHeight;
+        header.classList.toggle("fixed-header", d < 0);
+      });
+    </script>
+  </Fragment>
+</DefaultLayout>
