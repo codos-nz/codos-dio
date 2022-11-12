@@ -1,0 +1,23 @@
+---
+import DefaultLayout from "~/layouts/DefaultLayout.astro";
+import AboutUs from "~/components/aboutus.astro";
+const title = "About Us";
+const description = "The mystery queens - who are we?";
+---
+
+<DefaultLayout pageTitle={title}>
+  <Fragment slot="seo-header">
+    <meta name="description" content={description} />
+    <!-- OpenGraph Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <!-- <meta property="og:image" content={ogImgURL} /> -->
+    <!-- <meta property="og:image:alt" content={ogImgAlt} /> -->
+    <meta name="description" property="og:description" content={description} />
+    <meta property="og:site_name" content={title} />
+  </Fragment>
+  <Fragment slot="main-content">
+    <AboutUs />
+  </Fragment>
+</DefaultLayout>
