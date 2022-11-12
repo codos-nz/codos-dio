@@ -31,37 +31,6 @@ const { events } = await response.json();
     }today!!!
   </Fragment>
   <div class="max-w-6xl space-y-2">
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {
-        events.map(
-          ({ name, images, url, datetime_summary, location_summary }) => (
-            <ShowcaseCard
-              title={
-                String(name).toUpperCase().startsWith("DRAG IT OUT")
-                  ? String(name)
-                      .split(/([Pp][Rr][Ee][Ss][Ee][Nn][Tt][Ss]\s)+/g)
-                      .at(-1)
-                  : "Drag It Out"
-              }
-              image={images.images[0].original_url}
-              url={url}
-              date={datetime_summary}
-              location={location_summary}
-            />
-          )
-        )
-      }
-    </div>
-    <p class="text-lg text-right">
-      <a
-        class="text-primary after:content-['_↗']"
-        href="https://www.eventfinda.co.nz/user/dragitoutchch/favourites/events"
-        target="_blank"
-      >
-        ...and more
-      </a>
-    </p>
-    <br />
     <NewEventsCard events={events} />
   </div>
 </ContentSection>
