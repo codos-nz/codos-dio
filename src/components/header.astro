@@ -96,7 +96,6 @@ const navItems = [
   const menu = document.querySelector(`#${menuModalId} ul`);
   const openNavButton = document.querySelector("#open-nav-button");
   const closeNavButton = document.querySelector("#close-nav-button");
-
   const openMenu = () => {
     MicroModal.show(menuModalId, { disableScroll: true });
   };
@@ -130,21 +129,5 @@ const navItems = [
   }
   .modal.is-open {
     @apply block;
-  }
-  [astro-icon="icon-wordmark"] {
-    animation: animeLogo 0.6s cubic-bezier(0.3, 0.8, 1, 1.05) both;
-    animation-delay: 1.2s;
-  }
-
-  @keyframes animeLogo {
-    0% {
-      opacity: 0;
-      transform: scale(10) skew(20deg, 20deg);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    [astro-icon="icon-wordmark"] {
-      @apply animate-none;
-    }
   }
 </style>
