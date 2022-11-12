@@ -4,7 +4,7 @@ import { defineConfig } from "astro/config";
 import compress from "astro-compress";
 import vercel from "@astrojs/vercel/serverless";
 import sitemap from "@astrojs/sitemap";
-import robotsTxt from 'astro-robots-txt';
+import robotsTxt from "astro-robots-txt";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,7 +16,15 @@ export default defineConfig({
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
-    sitemap(),robotsTxt(),
+    sitemap({
+      customPages: [
+        "https://codos-dio.vercel.app/",
+        "https://codos-dio.vercel.app/events",
+        "https://codos-dio.vercel.app/about-us",
+        "https://codos-dio.vercel.app/contact",
+      ],
+    }),
+    robotsTxt(),
     compress({
       css: false,
       html: false,
