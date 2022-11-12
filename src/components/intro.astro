@@ -2,7 +2,6 @@
 import { Icon } from "astro-icon";
 import ContentSection from "~/components/content-section.astro";
 import Wordmark from "../assets/wordmark.svg";
-
 ---
 
 <ContentSection title="" id="intro" class="z-10">
@@ -18,25 +17,36 @@ import Wordmark from "../assets/wordmark.svg";
     <span class="text-sm text-right">Entertainment Ltd</span>
   </Fragment>
   <Fragment slot="lead">
-    CODOS offers a new kind of site builder for the
-    <span class="text-primary">modern</span> web.
-    <span class="text-primary">Lightning-fast</span>
-    performance meets <span class="text-primary">amazing</span> end-user experience.
+    If you want to be entertained and a night of <span class="text-primary"
+      >laughs</span
+    >, performances and shenanigans then <span class="text-primary">don’t</span
+    >{" "}miss out and come hang out with two of Christchurch’s <span
+      class="text-primary">most fabulous</span
+    >{" "}drag queens<br />
+    <span class="gradient-text-pride">Miss Shaniqwa</span>{" & "}<span
+      class="gradient-text">Lady Bubbles</span
+    >!
   </Fragment>
   <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
     <a
-      href="https://codos.co.nz"
+      target="_blank"
+      href="https://www.instagram.com/missshaniqwa/"
       class="flex items-center justify-center gap-3 px-6 py-4 border-2 border-current"
     >
-      <Icon pack="mdi" name="telescope" class="h-8" />
-      <span>Read the ToS</span>
+      <Icon pack="uil" name="instagram" class="h-8" />
+      <span>Miss Shaniqwa👠</span>
     </a>
     <a
-      href="https://codos.co.nz"
+      href="https://www.instagram.com/ladybubbleschch/"
       class="flex items-center justify-center gap-3 px-6 py-4 border-2 border-current"
     >
-      <Icon pack="mdi" name="dance-pole" class="h-8" />
-      <span>Drag it out</span>
+      <Icon pack="uil" name="instagram" class="h-8" />
+      <span>Lady Bubbles<Icon name="bubbles" class="h-8" /></span>
     </a>
   </div>
+  <style>
+    [astro-icon="bubbles"] {
+      display: inline;
+    }
+  </style>
 </ContentSection>
