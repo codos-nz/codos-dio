@@ -1,0 +1,22 @@
+---
+import DefaultLayout from "~/layouts/DefaultLayout.astro";
+import Contact from "~/components/contact.astro";
+const title = "Contact Us";
+const description =
+  "Jazz up your next event and book your local Drag Entertainers today.";
+---
+
+<DefaultLayout pageTitle={title}>
+  <Fragment slot="seo-header">
+    <meta name="description" content={description} />
+    <!-- OpenGraph Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <meta name="description" property="og:description" content={description} />
+    <meta property="og:site_name" content={title} />
+  </Fragment>
+  <Fragment slot="main-content">
+    <Contact />
+  </Fragment>
+</DefaultLayout>
