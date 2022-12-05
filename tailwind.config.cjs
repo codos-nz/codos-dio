@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: [ ...defaultTheme.fontFamily.sans],
+        sans: [...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: "var(--color-primary)",
@@ -21,6 +21,9 @@ module.exports = {
       },
       borderColor: {
         default: "var(--color-border)",
+      },
+      lineHeight: {
+        "6xl": 1.2,
       },
     },
   },
