@@ -1,6 +1,5 @@
 ---
 import ContentSection from "~/components/content-section.astro";
-import ShowcaseCard from "~/components/showcase-card.astro";
 import NewEventsCard from "~/components/new-events.astro";
 const paramsObj = {
   row: "20",
@@ -22,15 +21,39 @@ const headers = new Headers({
 });
 const response = await fetch(baseUrl, { headers });
 const { events } = await response.json();
+const anyUpcomingEvents = events?.length > 0;
 ---
 
-<ContentSection title="Upcoming Events" id="events">
+<ContentSection
+  title={anyUpcomingEvents ? `Upcoming Events` : `More Events Coming Soon`}
+  id="events"
+>
   <Fragment slot="lead">
-    Click on the event to buy your <span class="text-primary">tickets</span>{
-      " "
-    }today!!!
+    {
+      anyUpcomingEvents ? (
+        <>
+          Click on the event to buy your{" "}
+          <span class="text-primary">tickets</span> today!!!
+        </>
+      ) : (
+        ``
+      )
+    }
   </Fragment>
   <div class="max-w-6xl space-y-2">
     <NewEventsCard events={events} />
+    <p class="text-lg text-right">
+      <a
+        class="text-primary after:content-['_↗']"
+        href="https://www.eventfinda.co.nz/user/dragitoutchch/favourites/events"
+        target="_blank"
+      >
+      {anyUpcomingEvents? <>
+      ...and more{" "}
+      </> : <>
+      In the meantime, check out our Eventfinda page{" "}</>}
+        
+      </a>
+    </p>
   </div>
 </ContentSection>

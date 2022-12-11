@@ -6,119 +6,95 @@ const widths = [450, 800];
 const sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 ---
 
-{
-  events && (
-    <>
-      <div class="grid grid-cols-1 grid-flow-row sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-        {events.map(
-          ({
-            name,
-            images,
-            description,
-            url,
-            datetime_start,
-            datetime_summary,
-            location_summary,
-            ticket_types: { ticket_types: ticketTypes },
-            is_cancelled,
-          }) => (
-            <div
-              class={`relative mx-auto w-full ${
-                is_cancelled
-                  ? "grayscale pointer-events-none cursor-not-allowed line-through select-none"
-                  : "grayscale-0 pointer-events-auto cursor-auto"
-              }`}
-            >
-              <a
-                href={!is_cancelled ? url : ""}
-                class="relative inline-block duration-300 ease-in-out transition-transform transform hover:-translate-y-2 w-full"
-              >
-                <div class="p-4 rounded-lg shadow bg-[var(--color-background-offset)]">
-                  <div class="flex justify-center relative rounded-lg h-52">
-                    <div class="absolute inset-0 w-full">
-                      <Picture
-                        class="object-cover rounded-lg w-full h-full bg-cover"
-                        src={images.images[0].original_url}
-                        sizes={sizes}
-                        widths={widths}
-                        aspectRatio={906 / 514}
-                        alt={`A screenshot of ${name}`}
-                      />
-                    </div>
-
-                    <span
-                      class={`absolute -top-3 right-0 inline-flex mr-3 px-3 py-2 rounded-lg z-10 text-sm text-white select-none ${
-                        is_cancelled
-                          ? "bg-slate-900 font-bold"
-                          : "bg-red-600 font-medium"
-                      }`}
-                    >
-                      {!is_cancelled ? "Upcoming" : "CANCELLED"}
-                    </span>
-                  </div>
-
-                  <div class="mt-4">
-                    <h2
-                      class="font-medium text-default text-base md:text-lg line-clamp-1"
-                      title={`${name}`}
-                    >
-                      {String(name).toUpperCase().startsWith("DRAG IT OUT")
-                        ? String(name)
-                            .split(/([Pp][Rr][Ee][Ss][Ee][Nn][Tt][Ss]\s)+/g)
-                            .at(-1)
-                        : "Drag It Out"}
-                    </h2>
-                    <p
-                      class="mt-2 text-default text-sm line-clamp-2 min-h-[3.2em]"
-                      title={`${location_summary}`}
-                    >
-                      {location_summary}
-                    </p>
-                  </div>
-
-                  <div class="flex flex-row justify-between mt-8 items-center">
-                    <Calendar dateString={datetime_start} />
-                    <span class="text-default line-clamp-1 whitespace-nowrap">
-                      {datetime_summary}
-                    </span>
-                    <span class="inline-flex">
-                      <p class="inline-block font-semibold text-primary whitespace-nowrap leading-tight rounded-xl">
-                        <span class="text-sm uppercase"> $</span>
-                        <span class="text-lg slashed-zero tabular-nums">
-                          {ticketTypes[0].price}
-                        </span>
-                      </p>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          )
-        )}
-      </div>
-      <p class="text-lg text-right">
-        <a
-          class="text-primary after:content-['_↗']"
-          href="https://www.eventfinda.co.nz/user/dragitoutchch/favourites/events"
-          target="_blank"
+<div
+  class="grid grid-cols-1 grid-flow-row sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
+>
+  {
+    events.map(
+      ({
+        name,
+        images,
+        description,
+        url,
+        datetime_start,
+        datetime_summary,
+        location_summary,
+        ticket_types: { ticket_types: ticketTypes },
+        is_cancelled,
+      }) => (
+        <div
+          class={`relative mx-auto w-full ${
+            is_cancelled
+              ? "grayscale pointer-events-none cursor-not-allowed line-through select-none"
+              : "grayscale-0 pointer-events-auto cursor-auto"
+          }`}
         >
-          ...and more{" "}
-        </a>
-      </p>
-    </>
-  )
-}
+          <a
+            href={!is_cancelled ? url : ""}
+            class="relative inline-block duration-300 ease-in-out transition-transform transform hover:-translate-y-2 w-full"
+          >
+            <div class="p-4 rounded-lg shadow bg-[var(--color-background-offset)]">
+              <div class="flex justify-center relative rounded-lg h-52">
+                <div class="absolute inset-0 w-full">
+                  <Picture
+                    class="object-cover rounded-lg w-full h-full bg-cover"
+                    src={images.images[0].original_url}
+                    sizes={sizes}
+                    widths={widths}
+                    aspectRatio={906 / 514}
+                    alt={`A screenshot of ${name}`}
+                  />
+                </div>
 
-{
-  !events && (
-    <p class="text-lg text-right">
-      <a
-        class="text-primary after:content-['_↗']"
-        href="https://www.eventfinda.co.nz/user/dragitoutchch/favourites/events"
-        target="_blank"
-      >
-        more events coming soon! 
-      </a>
-    </p>
-  )
-}
+                <span
+                  class={`absolute -top-3 right-0 inline-flex mr-3 px-3 py-2 rounded-lg z-10 text-sm text-white select-none ${
+                    is_cancelled
+                      ? "bg-slate-900 font-bold"
+                      : "bg-red-600 font-medium"
+                  }`}
+                >
+                  {!is_cancelled ? "Upcoming" : "CANCELLED"}
+                </span>
+              </div>
+
+              <div class="mt-4">
+                <h2
+                  class="font-medium text-default text-base md:text-lg line-clamp-1"
+                  title={`${name}`}
+                >
+                  {String(name).toUpperCase().startsWith("DRAG IT OUT")
+                    ? String(name)
+                        .split(/([Pp][Rr][Ee][Ss][Ee][Nn][Tt][Ss]\s)+/g)
+                        .at(-1)
+                    : "Drag It Out"}
+                </h2>
+                <p
+                  class="mt-2 text-default text-sm line-clamp-2 min-h-[3.2em]"
+                  title={`${location_summary}`}
+                >
+                  {location_summary}
+                </p>
+              </div>
+
+              <div class="flex flex-row justify-between mt-8 items-center">
+                <Calendar dateString={datetime_start} />
+                <span class="text-default line-clamp-1 whitespace-nowrap">
+                  {datetime_summary}
+                </span>
+                <span class="inline-flex">
+                  <p class="inline-block font-semibold text-primary whitespace-nowrap leading-tight rounded-xl">
+                    <span class="text-sm uppercase"> $</span>
+                    <span class="text-lg slashed-zero tabular-nums">
+                      {ticketTypes[0].price}
+                    </span>
+                  </p>
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      )
+    )
+  }
+</div>
+
