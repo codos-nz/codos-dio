@@ -3,9 +3,9 @@ import { Picture } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
 import Bubbles from "./bubbles.astro";
 import HeroImage from "~/components/hero-image.astro";
-import PerformerBoth from "../assets/performer_both.webp";
+import PerformerBoth from "../assets/lady_bubbles_splash.png";
 const widths = [450, 800];
-const sizes = "(min-width: 640px) 42vw, 67vw";
+const sizes = "(min-width: 562px) 42vw, 67vw";
 ---
 
 <section class="relative h-full z-auto max-w-full">
@@ -20,10 +20,10 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
     />
     <Picture
       src={PerformerBoth}
-      class="animate-float mx-auto w-5/6 sm:w-2/3 pt-8"
+      class="animate-float mx-auto w-5/6 sm:w-1/2 pt-8"
       widths={widths}
       sizes={sizes}
-      aspectRatio={800 / 1051}
+      aspectRatio={562 / 1028}
       loading={"eager"}
       formats={["avif", "png", "webp"]}
       alt="Two drag performers appearing in the void"
