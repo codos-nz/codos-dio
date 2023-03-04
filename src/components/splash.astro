@@ -5,7 +5,7 @@ import Bubbles from "./bubbles.astro";
 import HeroImage from "~/components/hero-image.astro";
 import PerformerBoth from "../assets/lady_bubbles_splash.png";
 const widths = [450, 800];
-const sizes = "(min-width: 562px) 42vw, 70vw";
+const sizes = "(min-width: 562px) 42vw, 67vw";
 ---
 
 <section class="relative h-full z-auto max-w-full">
@@ -25,7 +25,7 @@ const sizes = "(min-width: 562px) 42vw, 70vw";
       sizes={sizes}
       aspectRatio={562 / 1028}
       loading={"eager"}
-      formats={["avif", "png", "webp"]}
+      formats={["png"]}
       alt="Two drag performers appearing in the void"
     />
   </div>
