@@ -21,10 +21,11 @@ const sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
         location_summary,
         ticket_types: { ticket_types: ticketTypes },
         is_cancelled,
+        is_sold_out
       }) => (
         <div
           class={`relative mx-auto w-full ${
-            is_cancelled
+            is_cancelled || is_sold_out
               ? "grayscale pointer-events-none cursor-not-allowed line-through select-none"
               : "grayscale-0 pointer-events-auto cursor-auto"
           }`}
@@ -53,7 +54,7 @@ const sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
                       : "bg-red-600 font-medium"
                   }`}
                 >
-                  {!is_cancelled ? "Upcoming" : "CANCELLED"}
+                  {is_sold_out ? "SOLD OUT" : is_cancelled ? "CANCELLED" : "Upcoming"}
                 </span>
               </div>
 
