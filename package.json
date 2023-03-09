@@ -25,6 +25,7 @@
     "@astrojs/image": "^0.11.1",
     "@astrojs/sitemap": "^1.0.0",
     "@astrojs/vercel": "^2.3.3",
+    "@vercel/og": "^0.4.0",
     "astro-compress": "1.0.12",
     "astro-google-fonts-optimizer": "^0.2.2",
     "astro-icon": "^0.8.0",
