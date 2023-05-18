@@ -49,7 +49,9 @@ const id = uuid();
         <span class="inline-flex items-center">
           <Icon class="w-9" name="checkmark" />
           <span class="text-xl after:content-['_😊']"
-            >Email sent successfully!</span
+            >Thanks for contacting DragItOut Entertainment Limited! We aim to
+            get back to you within 48 hours. Check out our socials in the
+            meantime!</span
           >
         </span>
       </div>
@@ -115,10 +117,68 @@ const id = uuid();
               />
             </div>
           </div>
+          <div class="p-2 w-1/2">
+            <div class="relative">
+              <label for="email" class="leading-7 text-sm text-default"
+                >Phone</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                class="w-full bg-[var(--color-background)] bg-opacity-50 rounded border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)] text-base outline-none text-[var(--color-text-offset)] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              />
+            </div>
+          </div>
+          <div class="p-2 w-1/2">
+            <div class="relative">
+              <label for="email" class="leading-7 text-sm text-default"
+                >Date of Event</label
+              >
+              <input
+                id="event-date"
+                name="event-date"
+                required
+                datepicker
+                datepicker-format="dd/mm/yyyy"
+                type="text"
+                class="w-full bg-[var(--color-background)] bg-opacity-50 rounded border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)] text-base outline-none text-[var(--color-text-offset)] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                placeholder="Select date"
+              />
+            </div>
+          </div>
+          <div class="p-2 w-1/2">
+            <div class="relative">
+              <label for="email" class="leading-7 text-sm text-default"
+                >Event Type</label
+              >
+              <input
+                id="event-type"
+                name="event-type"
+                type="text"
+                class="w-full bg-[var(--color-background)] bg-opacity-50 rounded border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)] text-base outline-none text-[var(--color-text-offset)] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              />
+            </div>
+          </div>
+          <div class="p-2 w-1/2">
+            <div class="relative">
+              <label for="email" class="leading-7 text-sm text-default"
+                >Event Location</label
+              >
+              <input
+                id="event-location"
+                name="event-location"
+                required
+                type="text"
+                class="w-full bg-[var(--color-background)] bg-opacity-50 rounded border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)] text-base outline-none text-[var(--color-text-offset)] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              />
+            </div>
+          </div>
           <div class="p-2 w-full">
             <div class="relative">
               <label for="message" class="leading-7 text-sm text-default"
-                >Message</label
+                >Additional Information</label
               >
               <textarea
                 id="message"
@@ -127,13 +187,14 @@ const id = uuid();
               ></textarea>
             </div>
           </div>
-          <div class="p-2 w-full">
-            <button
-              type="submit"
-              class="flex mx-auto text-white bg-indigo-600 border-0 py-2 px-8 focus:outline-none hover:bg-[var(--color-secondary)] hover:shadow rounded text-lg font-semibold"
-              >Send</button
-            >
-          </div>
+        </div>
+
+        <div class="p-2 w-full">
+          <button
+            type="submit"
+            class="flex mx-auto text-white bg-indigo-600 border-0 py-2 px-8 focus:outline-none hover:bg-[var(--color-secondary)] hover:shadow rounded text-lg font-semibold"
+            >Send</button
+          >
         </div>
       </form>
     </div>
@@ -141,6 +202,27 @@ const id = uuid();
 </ContentSection>
 
 <script>
+  import { parse, isFuture, startOfTomorrow } from "date-fns";
+  import Datepicker from "flowbite-datepicker/Datepicker";
+  function isDateInFuture(date) {
+    let isSelectable, additionalClasses, htmlFragment;
+    isSelectable = isFuture(date);
+    console.log("date: ", date);
+    console.log("isSelectable: ", isSelectable);
+    additionalClasses =
+      "grayscale pointer-events-none cursor-not-allowed line-through select-none";
+    return {
+      enabled: isSelectable,
+      classes: !isSelectable && additionalClasses,
+    };
+  }
+  const datepickerEl = document.getElementById("event-date");
+  new Datepicker(datepickerEl, {
+    format: "dd/mm/yyyy",
+    minDate: startOfTomorrow(),
+    beforeShowDay: isDateInFuture,
+  });
+
   function isAstroForm(target) {
     return target
       ? "dataset" in target && (target as HTMLElement).dataset.astroForm === ""
