@@ -33,11 +33,13 @@ import Calendar from "./calendar.astro";
             <div class="p-4 rounded-lg shadow bg-[var(--color-background-offset)]">
               <div class="flex justify-center relative rounded-lg h-52">
                 <div class="absolute inset-0 w-full">
-                  <Image
-                    class="object-cover rounded-lg w-full h-full bg-cover"
+                  <img
                     src={images.images[0].original_url}
                     width="904"
                     height="514"
+                    class="object-cover rounded-lg w-full h-full bg-cover"
+                    decoding="async"
+                    loading="lazy"
                     alt={`A screenshot of ${name}`}
                   />
                 </div>

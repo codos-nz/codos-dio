@@ -12,7 +12,7 @@ export default defineConfig({
   adapter: vercelServerless({
     analytics: true,
     imagesConfig: {
-      sizes: [400, 450, 600, 800, 1200, 1920, 2560, 3840],
+      sizes: [400, 450, 600, 800, 904, 1200, 1920, 2560, 3840],
     },
     imageService: true,
   }),
