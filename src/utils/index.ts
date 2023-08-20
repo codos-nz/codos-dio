@@ -1,5 +1,5 @@
 /// <reference types="astro/astro-jsx" />
-import { nanoid } from 'nanoid/non-secure'
+
 export const keyBy = (key, array, selectValue) =>
   (array &&
     array.reduce(
@@ -7,7 +7,7 @@ export const keyBy = (key, array, selectValue) =>
         Object.assign(current, {
           [incoming[key]]: selectValue ? selectValue(incoming) : incoming,
         }),
-      {}
+      {},
     )) ||
   null;
 
@@ -20,7 +20,3 @@ export interface GetPictureResultInterface {
 }
 
 export type GetPictureResultSourcesType = GetPictureResultInterface["sources"];
-
-export function uuid() {
-  return nanoid();
-}

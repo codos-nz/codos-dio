@@ -1,7 +1,8 @@
 ---
-import { Icon } from "astro-icon";
+export const prerender = true;
+import { Icon } from 'astro-icon/components'
 import ThemeSwitcher from "~/components/theme-switcher.astro";
-
+import Wordmark from "../assets/wordmark.svg";
 const navItems = [
   { title: "Events", url: "/events" },
   { title: "About Us ", url: "/about-us" },
@@ -15,7 +16,15 @@ const navItems = [
 >
   <a class="flex items-center gap-3 hover:!text-default" href="/">
     <h1 class="sr-only">Drag It Out</h1>
-    <Icon name="icon-wordmark" class="hidden h-10 sm:block" />
+    <img
+      src={Wordmark.src}
+      height="112"
+      width="684"
+      class="hidden h-10 sm:block"
+      decoding="async"
+      loading="lazy"
+      alt="A wordmark of Drag It Out"
+    />
   </a>
   <div>
     <div class="flex items-center gap-6">
@@ -24,10 +33,7 @@ const navItems = [
           {
             navItems.map(({ title, url }) => (
               <li>
-                <a
-                  class="text-lg font-extralight font-['Shrikhand']"
-                  href={url}
-                >
+                <a class="text-lg font-extralight font-['Shrikhand']" href={url}>
                   {title}
                 </a>
               </li>
@@ -35,13 +41,8 @@ const navItems = [
           }
         </ul>
       </nav>
-      <button
-        id="open-nav-button"
-        type="button"
-        class="btn sm:hidden"
-        aria-label="Navigation"
-      >
-        <Icon pack="mdi" name="menu" class="h-8" />
+      <button id="open-nav-button" type="button" class="btn sm:hidden" aria-label="Navigation">
+        <Icon name="mdi:menu" class="h-8" />
       </button>
       <ThemeSwitcher />
     </div>
@@ -49,27 +50,29 @@ const navItems = [
       <div class="fixed inset-0 px-8 py-4 bg-default text-default">
         <div class="space-y-4" role="dialog" aria-modal="true">
           <header class="text-right">
-            <button
-              id="close-nav-button"
-              type="button"
-              class="btn"
-              aria-label="Close navigation"
-            >
-              <Icon pack="mdi" name="close" class="h-8" />
+            <button id="close-nav-button" type="button" class="btn" aria-label="Close navigation">
+              <Icon name="mdi:close" class="h-8" />
             </button>
           </header>
           <div class="flex justify-center">
-            <a href="/"><Icon name="icon-wordmark" class="h-16" /></a>
+            <a href="/">
+              <img
+                src={Wordmark.src}
+                height="112"
+                width="684"
+                class="h-16"
+                decoding="async"
+                loading="lazy"
+                alt="A wordmark of Drag It Out"
+              />
+            </a>
           </div>
           <nav>
             <ul class="flex flex-col">
               {
                 navItems.map(({ title, url }) => (
                   <li>
-                    <a
-                      class="block py-4 text-xl text-center font-extralight font-['Shrikhand']"
-                      href={url}
-                    >
+                    <a class="block py-4 text-xl text-center font-extralight font-['Shrikhand']" href={url}>
                       {title}
                     </a>
                   </li>
@@ -83,10 +86,10 @@ const navItems = [
   </div>
 </header>
 <script is:inline>
-  if (window.location.pathname === "/") {
-    const header = document.querySelector("#page-header");
-    header.classList.remove("fixed-header");
-  }
+if (window.location.pathname === "/") {
+  const header = document.querySelector("#page-header");
+  header.classList.remove("fixed-header");
+}
 </script>
 <script>
   import MicroModal from "micromodal";

@@ -17,13 +17,17 @@ export const post = async ({ request }) => {
       });
       if (!response.ok) {
         console.error(response);
-        res = new Response(JSON.stringify(response.status), { status: response.status });
+        res = new Response(JSON.stringify(response.status), {
+          status: response.status,
+        });
         res.headers.set("Content-type", "text/plain");
       }
       const result = await response.json();
       if (!result.success) {
         console.error(result.message);
-        res = new Response(JSON.stringify(result.message), { status: response.status });
+        res = new Response(JSON.stringify(result.message), {
+          status: response.status,
+        });
         res.headers.set("Content-type", "text/plain");
       }
       res = new Response(JSON.stringify(result), { status: 200 });

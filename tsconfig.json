@@ -15,7 +15,6 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
-    },
-    "types": ["@astrojs/image/client"]
+    }
   }
 }

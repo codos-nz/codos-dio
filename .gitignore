@@ -253,3 +253,4 @@ $RECYCLE.BIN/
 .vercel/
 .vscode/
 .npmrc
+.astro
