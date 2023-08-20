@@ -1,15 +1,14 @@
 ---
 export const prerender = true;
 import ContentSection from "~/components/content-section.astro";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 const id = crypto.randomUUID();
 ---
 
 <ContentSection title="Contact" id="contact">
   <Fragment slot="lead">
-    Book A <span class="text-primary">Queen</span>{" "}today for your next
-    Private Function - Hens Night, Corperate Event, Christmas Party or we can
-    customize and event just for you.
+    Book A <span class="text-primary">Queen</span>{" "}today for your next Private Function - Hens Night, Corperate
+    Event, Christmas Party or we can customize and event just for you.
   </Fragment>
   <div class="max-w-6xl space-y-2 container mx-auto">
     <div class="lg:w-1/2 md:w-2/3 mx-auto relative">
@@ -25,13 +24,7 @@ const id = crypto.randomUUID();
             fill="none"
             viewBox="0 0 24 24"
           >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"></circle>
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path
               class="opacity-75"
               fill="currentColor"
@@ -47,11 +40,10 @@ const id = crypto.randomUUID();
         class="absolute bg-emerald-500 text-neutral-50 bg-opacity-90 z-10 h-full w-full flex items-center justify-center rounded-lg hidden"
       >
         <span class="inline-flex items-center">
-          <Icon class="w-9" name="checkmark" />
+          <Icon class="w-9" name="mdi:check-circle" />
           <span class="text-xl after:content-['_😊']"
-            >Thanks for contacting DragItOut Entertainment Limited! We aim to
-            get back to you within 48 hours. Check out our socials in the
-            meantime!</span
+            >Thanks for contacting DragItOut Entertainment Limited! We aim to get back to you within 48 hours. Check out
+            our socials in the meantime!</span
           >
         </span>
       </div>
@@ -61,39 +53,19 @@ const id = crypto.randomUUID();
       >
         <div>
           <span class="inline-flex items-center">
-            <Icon class="w-9" name="errormark" />
-            <span class="text-xl after:content-['_😳']"
-              >Something went wrong</span
-            >
+            <Icon class="w-9" name="mdi:alert-circle" />
+            <span class="text-xl after:content-['_😳']">Something went wrong</span>
           </span>
         </div>
 
-        <button
-          id="try-agian"
-          type="button"
-          class="text-lg underline select-none cursor-pointer"
-        >
-          Try Again?
-        </button>
+        <button id="try-agian" type="button" class="text-lg underline select-none cursor-pointer"> Try Again?</button>
       </div>
-      <form
-        id="contact-form"
-        method="post"
-        data-method={"post"}
-        action={`?astro:form=${id}`}
-        data-astro-form
-      >
-        <input
-          type="hidden"
-          name="subject"
-          value="New Submission from DragItOut website"
-        />
+      <form id="contact-form" method="post" data-method={"post"} action={`?astro:form=${id}`} data-astro-form>
+        <input type="hidden" name="subject" value="New Submission from DragItOut website" />
         <div class="flex flex-wrap -m-2">
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="name" class="leading-7 text-sm text-default"
-                >Name</label
-              >
+              <label for="name" class="leading-7 text-sm text-default">Name</label>
               <input
                 type="text"
                 id="name"
@@ -105,9 +77,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="email" class="leading-7 text-sm text-default"
-                >Email</label
-              >
+              <label for="email" class="leading-7 text-sm text-default">Email</label>
               <input
                 type="email"
                 id="email"
@@ -119,9 +89,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="email" class="leading-7 text-sm text-default"
-                >Phone</label
-              >
+              <label for="email" class="leading-7 text-sm text-default">Phone</label>
               <input
                 type="tel"
                 id="phone"
@@ -133,9 +101,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="email" class="leading-7 text-sm text-default"
-                >Date of Event</label
-              >
+              <label for="email" class="leading-7 text-sm text-default">Date of Event</label>
               <input
                 id="event-date"
                 name="event-date"
@@ -150,9 +116,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="email" class="leading-7 text-sm text-default"
-                >Event Type</label
-              >
+              <label for="email" class="leading-7 text-sm text-default">Event Type</label>
               <input
                 id="event-type"
                 name="event-type"
@@ -163,9 +127,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="email" class="leading-7 text-sm text-default"
-                >Event Location</label
-              >
+              <label for="email" class="leading-7 text-sm text-default">Event Location</label>
               <input
                 id="event-location"
                 name="event-location"
@@ -177,9 +139,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-full">
             <div class="relative">
-              <label for="message" class="leading-7 text-sm text-default"
-                >Additional Information</label
-              >
+              <label for="message" class="leading-7 text-sm text-default">Additional Information</label>
               <textarea
                 id="message"
                 name="message"
@@ -207,8 +167,7 @@ const id = crypto.randomUUID();
   function isDateInFuture(date) {
     let isSelectable, additionalClasses, htmlFragment;
     isSelectable = isFuture(date);
-    additionalClasses =
-      "grayscale pointer-events-none cursor-not-allowed line-through select-none";
+    additionalClasses = "grayscale pointer-events-none cursor-not-allowed line-through select-none";
     return {
       enabled: isSelectable,
       classes: !isSelectable && additionalClasses,
@@ -222,9 +181,7 @@ const id = crypto.randomUUID();
   });
 
   function isAstroForm(target) {
-    return target
-      ? "dataset" in target && (target as HTMLElement).dataset.astroForm === ""
-      : false;
+    return target ? "dataset" in target && (target as HTMLElement).dataset.astroForm === "" : false;
   }
   for (const form of document.querySelectorAll(`form[data-astro-form][id]`)) {
     const key = `astro-form[#${form.id}]`;
@@ -234,20 +191,14 @@ const id = crypto.randomUUID();
     }
   }
   function onSuccess() {
-    const loadingElement = document.querySelector(
-      "#contact-form-overlay-loading"
-    );
+    const loadingElement = document.querySelector("#contact-form-overlay-loading");
     loadingElement.classList.add("hidden");
-    const successfulElement = document.querySelector(
-      "#contact-form-overlay-successful"
-    );
+    const successfulElement = document.querySelector("#contact-form-overlay-successful");
     successfulElement.classList.remove("hidden");
   }
 
   function onFailure() {
-    const loadingElement = document.querySelector(
-      "#contact-form-overlay-loading"
-    );
+    const loadingElement = document.querySelector("#contact-form-overlay-loading");
     loadingElement.classList.add("hidden");
     const errorElement = document.querySelector("#contact-form-overlay-error");
     errorElement.classList.remove("hidden");
@@ -262,13 +213,9 @@ const id = crypto.randomUUID();
   window.addEventListener("submit", async (event) => {
     if (!isAstroForm(event.target)) return;
     event.preventDefault();
-    const parentElement = document.querySelector(
-      "#contact-form-overlay-loading"
-    );
+    const parentElement = document.querySelector("#contact-form-overlay-loading");
     parentElement.classList.remove("hidden");
-    const data = Object.fromEntries(
-      new FormData(event.target as HTMLFormElement).entries()
-    );
+    const data = Object.fromEntries(new FormData(event.target as HTMLFormElement).entries());
     const response = await fetch("/api/contact", {
       method: "POST",
       headers: {

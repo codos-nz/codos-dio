@@ -7,7 +7,7 @@ export const keyBy = (key, array, selectValue) =>
         Object.assign(current, {
           [incoming[key]]: selectValue ? selectValue(incoming) : incoming,
         }),
-      {}
+      {},
     )) ||
   null;
 

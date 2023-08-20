@@ -1,7 +1,7 @@
 ---
 export const prerender = true;
 import { Image } from "astro:assets";
-import { Icon } from "astro-icon";
+import { Icon } from 'astro-icon/components'
 import LadyBubbles from "../assets/lady_bubbles.png";
 
 const widths = [450, 608];
@@ -36,7 +36,7 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
                 target="_blank"
                 href="https://www.instagram.com/ladybubbleschch/"
               >
-                <Icon name="uil:instagram-alt" class="svg-inline" />
+                <Icon name="fa-brands:instagram" class="svg-inline" />
               </a>
             </h2>
             <p class="text-slate-700 mb-2">
@@ -48,10 +48,12 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
               If you can't see her you will definitely hear her.
             </p>
             <p class="text-slate-700 mb-12">
-              She is known for riding her <Icon
+              She is known for riding her 
+              <Icon
                 name="lime"
                 class="svg-inline"
-              /> lime scooter around the streets of Christchurch.
+              />
+               lime scooter around the streets of Christchurch.
             </p>
 
             <div class="grid md:grid-cols-3 gap-x-6">

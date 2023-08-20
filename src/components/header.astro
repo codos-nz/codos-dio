@@ -1,7 +1,6 @@
 ---
 export const prerender = true;
-import { Icon } from "astro-icon";
-import { Image } from "astro:assets";
+import { Icon } from 'astro-icon/components'
 import ThemeSwitcher from "~/components/theme-switcher.astro";
 import Wordmark from "../assets/wordmark.svg";
 const navItems = [
@@ -17,7 +16,6 @@ const navItems = [
 >
   <a class="flex items-center gap-3 hover:!text-default" href="/">
     <h1 class="sr-only">Drag It Out</h1>
-    <!-- <Image src={Wordmark} class="hidden h-10 sm:block" alt="A wordmark of Drag It Out" quality={"mid"} /> -->
     <img
       src={Wordmark.src}
       height="112"
@@ -44,7 +42,7 @@ const navItems = [
         </ul>
       </nav>
       <button id="open-nav-button" type="button" class="btn sm:hidden" aria-label="Navigation">
-        <Icon pack="mdi" name="menu" class="h-8" />
+        <Icon name="mdi:menu" class="h-8" />
       </button>
       <ThemeSwitcher />
     </div>
@@ -53,7 +51,7 @@ const navItems = [
         <div class="space-y-4" role="dialog" aria-modal="true">
           <header class="text-right">
             <button id="close-nav-button" type="button" class="btn" aria-label="Close navigation">
-              <Icon pack="mdi" name="close" class="h-8" />
+              <Icon name="mdi:close" class="h-8" />
             </button>
           </header>
           <div class="flex justify-center">
@@ -67,7 +65,6 @@ const navItems = [
                 loading="lazy"
                 alt="A wordmark of Drag It Out"
               />
-              <!-- <Icon name="icon-wordmark" class="h-16" /> -->
             </a>
           </div>
           <nav>

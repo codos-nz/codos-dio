@@ -1,11 +1,10 @@
 ---
 export const prerender = true;
 import { Image } from "astro:assets";
-import { Icon } from "astro-icon";
 import Bubbles from "./bubbles.astro";
 import HeroImage from "~/components/hero-image.astro";
+import Wordmark from "../assets/wordmark.svg";
 import PerformerBoth from "../assets/lady_bubbles_splash.png";
-const widths = [450, 800];
 const sizes = "(min-width: 562px) 42vw, 67vw";
 ---
 
@@ -15,16 +14,20 @@ const sizes = "(min-width: 562px) 42vw, 67vw";
     <HeroImage />
   </div>
   <div class="relative m-auto max-w-3xl">
-    <Icon
-      name="icon-wordmark"
+    <img
+      src={Wordmark.src}
+      height="112"
+      width="684"
       class="object-cover mx-auto pt-8 w-5/6 block sm:hidden"
+      decoding="async"
+      loading="lazy"
+      alt="A wordmark of Drag It Out"
     />
     <Image
       src={PerformerBoth}
       class="animate-float mx-auto w-2/3 sm:w-1/2 pt-8"
+      alt="one drag performer appearing in the void"
       sizes={sizes}
-      loading={"eager"}
-      alt="Two drag performers appearing in the void"
     />
   </div>
 </section>

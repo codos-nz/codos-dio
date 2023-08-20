@@ -1,6 +1,5 @@
 ---
 export const prerender = true;
-import { Icon } from "astro-icon";
 const { title, data, url } = Astro.props;
 ---
 
@@ -16,7 +15,6 @@ const { title, data, url } = Astro.props;
         data.map(({ title, icon, url }) => (
           <li>
             <a class="flex flex-col items-center gap-2" href={url}>
-              <Icon class="h-12" name={icon} />
               <span>{title}</span>
             </a>
           </li>

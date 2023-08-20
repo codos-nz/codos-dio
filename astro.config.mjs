@@ -1,6 +1,7 @@
 import tailwind from "@astrojs/tailwind";
 import { defineConfig, sharpImageService } from "astro/config";
 import vercelServerless from "@astrojs/vercel/serverless";
+import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import robotsTxt from "astro-robots-txt";
 
@@ -40,6 +41,24 @@ export default defineConfig({
       ],
     }),
     robotsTxt(),
+    icon({
+      iconDir: "/src/assets/icons",
+      include: {
+        mdi: ["email", "menu", "close", "check-circle", "alert-circle"],
+        noto: ["party-popper", "drum"],
+        fxemoji: ["chilipepper"],
+        "fluent-emoji": ["bubbles"],
+        "fa-brands": ["facebook", "instagram"],
+      },
+      svgoOptions: {
+        multipass: true,
+        plugins: [
+          {
+            name: "preset-default",
+          },
+        ],
+      },
+    }),
   ],
   cleanUrls: true,
   experimental: {
