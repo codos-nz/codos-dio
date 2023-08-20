@@ -1,5 +1,6 @@
 ---
-import { Picture } from "@astrojs/image/components";
+export const prerender = true;
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon";
 import LadyBubbles from "../assets/lady_bubbles.png";
 
@@ -7,7 +8,7 @@ const widths = [450, 608];
 const sizes = "(min-width: 640px) 42vw, 67vw";
 ---
 
-<div class="container my-24 px-6 mx-auto">
+<div class="container my-24 px-3 mx-auto">
   <section class="text-gray-800 text-center lg:text-left">
     <style>
       @media (min-width: 992px) {
@@ -85,14 +86,12 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
         </div>
         <div>
           <a target="_blank" href="https://www.instagram.com/ladybubbleschch/">
-            <Picture
+            <Image
               src={LadyBubbles}
               class="w-full shadow-lg fancy-border-radius rotate-lg-6 cursor-alias"
-              widths={widths}
               sizes={sizes}
-              aspectRatio={608 / 808}
-              formats={["avif", "png", "webp"]}
               alt="Lady Bubbles portait"
+              quality={"mid"}
             />
           </a>
         </div>

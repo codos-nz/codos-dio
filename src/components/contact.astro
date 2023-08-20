@@ -1,8 +1,8 @@
 ---
+export const prerender = true;
 import ContentSection from "~/components/content-section.astro";
 import { Icon } from "astro-icon";
-import { uuid } from "~/utils";
-const id = uuid();
+const id = crypto.randomUUID();
 ---
 
 <ContentSection title="Contact" id="contact">
@@ -207,8 +207,6 @@ const id = uuid();
   function isDateInFuture(date) {
     let isSelectable, additionalClasses, htmlFragment;
     isSelectable = isFuture(date);
-    console.log("date: ", date);
-    console.log("isSelectable: ", isSelectable);
     additionalClasses =
       "grayscale pointer-events-none cursor-not-allowed line-through select-none";
     return {

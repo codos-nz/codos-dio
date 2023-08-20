@@ -1,18 +1,16 @@
 ---
 const { title, image, location, date, url } = Astro.props;
-import { Picture } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 const widths = [450, 800];
 const sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 ---
 
 <a class="group aspect-video hover:!text-default" href={url}>
   <figure class="relative w-full h-full overflow-hidden">
-    <Picture
+    <Image
       class="object-cover w-full h-full transition-all duration-300 bg-cover group-hover:scale-110 group-hover:opacity-20 group-focus:scale-110 group-focus:opacity-20"
       src={image}
       sizes={sizes}
-      widths={widths}
-      aspectRatio={906 / 514}
       alt={`A screenshot of ${title}`}
     />
     <figcaption class="absolute inset-0">

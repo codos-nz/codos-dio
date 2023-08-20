@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import { Icon } from "astro-icon";
 import ContentSection from "~/components/content-section.astro";
 import Wordmark from "../assets/wordmark.svg";
@@ -7,10 +8,11 @@ import Wordmark from "../assets/wordmark.svg";
 <ContentSection title="" id="intro" class="z-10">
   <Fragment slot="eyebrow">
     <img
-      src={Wordmark}
+      src={Wordmark.src}
       height="112"
       width="684"
       class="object-cover w-50"
+      decoding="async"
       loading="lazy"
       alt="A wordmark of Drag It Out"
     />

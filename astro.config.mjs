@@ -1,5 +1,4 @@
 import tailwind from "@astrojs/tailwind";
-import image from "@astrojs/image";
 import { defineConfig } from "astro/config";
 import compress from "astro-compress";
 import vercel from "@astrojs/vercel/serverless";
@@ -10,12 +9,15 @@ import robotsTxt from "astro-robots-txt";
 export default defineConfig({
   site: "https://www.dragitout.co.nz",
   output: "server",
-  adapter: vercel(),
+  adapter: vercel({
+    analytics: true,
+    imageService: true,
+    imagesConfig: {
+      sizes: [400, 800, 1200, 1920, 2560, 3840]
+    }
+  }),
   integrations: [
     tailwind(),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
-    }),
     sitemap({
       customPages: [
         "https://www.dragitout.co.nz/",
@@ -34,4 +36,8 @@ export default defineConfig({
     }),
   ],
   cleanUrls: true,
+  experimental: { assets: true },
+  build: {
+    split: true
+}
 });

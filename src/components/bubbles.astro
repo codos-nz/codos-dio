@@ -5,7 +5,9 @@ import backgroundDots from "../assets/background-dots.svg";
 <div id="bubblefield" class="absolute inset-0 z-0 overflow-hidden">
   <img
     class="bubbles object-cover"
-    src={backgroundDots}
+    src={backgroundDots.src}
+    decoding="async"
+    loading="lazy"
     alt="bubbly background"
   />
 </div>
