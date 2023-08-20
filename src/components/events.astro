@@ -8,10 +8,7 @@ const paramsObj = {
   fields: import.meta.env.QUERY_FIELDS,
   date_format: "%e %b",
 };
-const baseUrl = new URL(
-  import.meta.env.EVENTFINDA_BASE_URL +
-    `?${new URLSearchParams(paramsObj).toString()}`
-);
+const baseUrl = new URL(import.meta.env.EVENTFINDA_BASE_URL + `?${new URLSearchParams(paramsObj).toString()}`);
 const headers = new Headers({
   "Content-Type": "application/json",
   Authorization: import.meta.env.API_KEY,
@@ -25,16 +22,12 @@ const { events } = await response.json();
 const anyUpcomingEvents = events?.length > 0;
 ---
 
-<ContentSection
-  title={anyUpcomingEvents ? `Upcoming Events` : `More Events Coming Soon`}
-  id="events"
->
+<ContentSection title={anyUpcomingEvents ? `Upcoming Events` : `More Events Coming Soon`} id="events">
   <Fragment slot="lead">
     {
       anyUpcomingEvents ? (
         <>
-          Click on the event to buy your{" "}
-          <span class="text-primary">tickets</span> today!!!
+          Click on the event to buy your <span class="text-primary">tickets</span> today!!!
         </>
       ) : (
         ``
@@ -49,11 +42,7 @@ const anyUpcomingEvents = events?.length > 0;
         href="https://www.eventfinda.co.nz/user/dragitoutchch/favourites/events"
         target="_blank"
       >
-      {anyUpcomingEvents? <>
-      ...and more{" "}
-      </> : <>
-      In the meantime, check out our Eventfinda page{" "}</>}
-        
+        {anyUpcomingEvents ? <>...and more </> : <>In the meantime, check out our Eventfinda page </>}
       </a>
     </p>
   </div>
