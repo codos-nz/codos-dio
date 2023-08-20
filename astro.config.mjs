@@ -21,8 +21,7 @@ export default defineConfig({
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.eventfinda.co.nz",
-        pathname: "/uploads/events/**",
+        hostname: "**.eventfinda.co.nz",
       },
       {
         protocol: "https",
