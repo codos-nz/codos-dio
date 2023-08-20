@@ -44,11 +44,20 @@ export default defineConfig({
     icon({
       iconDir: "/src/assets/icons",
       include: {
-        mdi: ["email", "menu", "close", "check-circle", "alert-circle"],
+        mdi: [
+          "email",
+          "menu",
+          "close",
+          "check-circle",
+          "alert-circle",
+          "white-balance-sunny",
+          "weather-night",
+        ],
         noto: ["party-popper", "drum"],
         fxemoji: ["chilipepper"],
         "fluent-emoji": ["bubbles"],
         "fa-brands": ["facebook", "instagram"],
+        arcticons: ["lime"],
       },
       svgoOptions: {
         multipass: true,
@@ -66,5 +75,15 @@ export default defineConfig({
   },
   build: {
     split: true,
+  },
+  vite: {
+    resolve: {
+      alias: {
+        svgo: import.meta.env.PROD ? "svgo/dist/svgo.browser.js" : "svgo",
+      },
+    },
+    ssr: {
+      external: ['svgo']
+    }
   },
 });

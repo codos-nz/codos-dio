@@ -20,9 +20,6 @@ dependencies:
   astro-robots-txt:
     specifier: ^0.5.0
     version: 0.5.0
-  date-fns:
-    specifier: ^2.30.0
-    version: 2.30.0
   flowbite:
     specifier: ^1.8.1
     version: 1.8.1
@@ -52,6 +49,9 @@ devDependencies:
   '@astrojs/tailwind':
     specifier: ^4.0.0
     version: 4.0.0(astro@2.10.12)(tailwindcss@3.3.3)
+  '@iconify-json/arcticons':
+    specifier: ^1.1.67
+    version: 1.1.67
   '@iconify-json/fa-brands':
     specifier: ^1.1.5
     version: 1.1.5
@@ -392,13 +392,6 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-syntax-jsx': 7.22.5(@babel/core@7.22.10)
       '@babel/types': 7.22.10
-
-  /@babel/runtime@7.22.10:
-    resolution: {integrity: sha512-21t/fkKLMZI4pqP2wlmsQAWnYW1PDyKyyUV4vCi+B25ydmdaYTKXPwCj0BzSUnZf4seIiYvSA3jcZ3gdsMFkLQ==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.14.0
-    dev: false
 
   /@babel/template@7.22.5:
     resolution: {integrity: sha512-X7yV7eiwAxdj9k94NEylvbVHLiVG1nvzCV2EAowhxLTwODV1jl9UzZ48leOC0sH7OnuHrIkllaBgneUykIcZaw==}
@@ -797,6 +790,12 @@ packages:
     os: [win32]
     requiresBuild: true
     optional: true
+
+  /@iconify-json/arcticons@1.1.67:
+    resolution: {integrity: sha512-BiOwHrhtxFZyTCJcYBKxkab8Qc4k9qBnsL+XoKY8ZLvAKRBYtq3ftsRrbjtAYPivJaB1FVC7KddjV+WormGhEg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
 
   /@iconify-json/fa-brands@1.1.5:
     resolution: {integrity: sha512-sXxGoXEsHMZrUQYvzfmPBEuoqEIv/PqqtpW5vNqbHU8p9CiU718SV+JI26ARnypGmQjlK0pKHV7kUykIVD2X6w==}
@@ -1659,13 +1658,6 @@ packages:
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
     dependencies:
       css-tree: 2.2.1
-    dev: false
-
-  /date-fns@2.30.0:
-    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
-    engines: {node: '>=0.11'}
-    dependencies:
-      '@babel/runtime': 7.22.10
     dev: false
 
   /debug@4.3.4:
@@ -3445,10 +3437,6 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
-
-  /regenerator-runtime@0.14.0:
-    resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
-    dev: false
 
   /rehype-parse@8.0.5:
     resolution: {integrity: sha512-Ds3RglaY/+clEX2U2mHflt7NlMA72KspZ0JLUJgBBLpRddBcEw3H8uYZQliQriku22NZpYMfjDdSgHcjxue24A==}

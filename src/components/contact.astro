@@ -89,7 +89,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="email" class="leading-7 text-sm text-default">Phone</label>
+              <label for="phone" class="leading-7 text-sm text-default">Phone</label>
               <input
                 type="tel"
                 id="phone"
@@ -101,7 +101,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="email" class="leading-7 text-sm text-default">Date of Event</label>
+              <label for="event-date" class="leading-7 text-sm text-default">Date of Event</label>
               <input
                 id="event-date"
                 name="event-date"
@@ -116,7 +116,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="email" class="leading-7 text-sm text-default">Event Type</label>
+              <label for="event-type" class="leading-7 text-sm text-default">Event Type</label>
               <input
                 id="event-type"
                 name="event-type"
@@ -127,7 +127,7 @@ const id = crypto.randomUUID();
           </div>
           <div class="p-2 w-1/2">
             <div class="relative">
-              <label for="email" class="leading-7 text-sm text-default">Event Location</label>
+              <label for="event-location" class="leading-7 text-sm text-default">Event Location</label>
               <input
                 id="event-location"
                 name="event-location"
@@ -162,8 +162,24 @@ const id = crypto.randomUUID();
 </ContentSection>
 
 <script>
-  import { parse, isFuture, startOfTomorrow } from "date-fns";
   import Datepicker from "flowbite-datepicker/Datepicker";
+  function startOfTomorrow() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const day = now.getDate();
+    const date = new Date(0);
+    date.setFullYear(year, month, day + 1);
+    date.setHours(0, 0, 0, 0);
+
+    return date;
+  }
+  function isFuture(date) {
+    const dateToCompare = new Date();
+
+    return date.getTime() > dateToCompare.getTime();
+  }
+
   function isDateInFuture(date) {
     let isSelectable, additionalClasses, htmlFragment;
     isSelectable = isFuture(date);
