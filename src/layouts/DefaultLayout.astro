@@ -20,7 +20,11 @@ import "~/styles/index.css";
     />
     <title>{pageTitle}</title>
     <meta property="og:url" content={canonical} />
-
+    <!-- Vercel Web Analytics -->
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
     <slot name="seo-header" />
     <!-- initialize theme -->
     <script is:inline>
