@@ -1,6 +1,6 @@
 ---
 import DefaultLayout from "~/layouts/DefaultLayout.astro";
-import Contact from "~/components/contact.astro";
+import ContactComponent from "~/components/contact-component.astro";
 const title = "Contact Us";
 const description =
   "Jazz up your next event and book your local Drag Entertainers today.";
@@ -17,6 +17,6 @@ const description =
     <meta property="og:site_name" content={title} />
   </Fragment>
   <Fragment slot="main-content">
-    <Contact />
+    <ContactComponent />
   </Fragment>
 </DefaultLayout>

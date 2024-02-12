@@ -3,7 +3,7 @@ import DefaultLayout from "~/layouts/DefaultLayout.astro";
 import AboutUs from "~/components/aboutus.astro";
 import Events from "~/components/events.astro";
 import Intro from "~/components/intro.astro";
-import Contact from "~/components/contact.astro";
+import ContactComponent from "~/components/contact-component.astro";
 import Splash from "~/components/splash.astro";
 
 const { site } = Astro;
@@ -47,7 +47,7 @@ const canonical = new URL(Astro.url.pathname, site).href;
     <Intro />
     <Events />
     <AboutUs />
-    <Contact />
+    <ContactComponent />
     <script>
       const header: HTMLElement = document.querySelector("#page-header");
       const page = document.documentElement;
